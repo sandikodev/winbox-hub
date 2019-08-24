@@ -1,0 +1,22 @@
+name: jajalapp
+version: '1.1.3'
+summary: jajal
+description: |
+grade: stable
+confinement: strict
+base: core18
+
+apps:
+        httpstat:
+                command: echo jajal
+
+parts:
+        my-parts:
+                plugin: my-plugin
+                my-property: test value
+                #plugin: dump
+                #build-packages:
+                #        - wget
+                #stage-packages:
+                        #- libgtk3-nocsd0
+                        #- wine-stable

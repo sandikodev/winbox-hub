@@ -1,0 +1,12 @@
+name: winbox
+version: 3.18
+summary: Instan Package of Winbox Cross-Platform
+description: get easy to distribute winbox app through multi platform habits system
+base: core18
+architectures:
+- amd64
+confinement: strict
+grade: stable
+apps:
+  winbox:
+    command: command-winbox.wrapper

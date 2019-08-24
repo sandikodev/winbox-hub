@@ -1,0 +1,628 @@
+Script started on 2019-07-05 15:55:31+07:00 [TERM="xterm-256color" TTY="/dev/pts/1" COLUMNS="221" LINES="54"]
+nethogs, tcpdump , dhcpdump
+[1m[7m%[27m[1m[0m                                                                                                                                                                                                                             ]2;dev@ls: ~/Documents/httpstat]1;..ents/httpstat[0m[27m[24m[J(base) [01;32m➜  [36mhttpstat[00m [K[?1h=[?2004h[?1l>[?2004l
+[1m[7m%[27m[1m[0m                                                                                                                                                                                                                             ]2;dev@ls: ~/Documents/httpstat]1;..ents/httpstat[0m[27m[24m[J(base) [01;32m➜  [36mhttpstat[00m [K[?1h=[?2004hm[90mkdir -p parts/my-part/src/[39m[26Dm[39ma[90mn[90m [90ms[90mn[90ma[90mp[39m[39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [25D[39mn[39m [39ms[39mc[90mr[90ma[90mpy[39m[39mr[39mi[39m [39m pt[?1l>[?2004l
+]2;man script]1;man[?1049h[22;0;0t[?1h=SCRIPT(1)                                                                                            User Commands                                                                                            SCRIPT(1)[m
+[m
+[1mNAME[0m[m
+       script - make typescript of terminal session[m
+[m
+[1mSYNOPSIS[0m[m
+       [1mscript[0m [options] [[4mfile[24m][m
+[m
+[1mDESCRIPTION[0m[m
+       [1mscript[0m  makes  a  typescript  of everything displayed on your terminal.  It is useful for students who need a hardcopy record of an interactive session as proof of an assignment, as the typescript file can be[m
+       printed out later with [1mlpr[0m(1).[m
+[m
+       If the argument [4mfile[24m is given, [1mscript[0m saves the dialogue in this [4mfile[24m.  If no filename is given, the dialogue is saved in the file [1mtypescript[0m.[m
+[m
+[1mOPTIONS[0m[m
+       Below, the [4msize[24m argument may be followed by the multiplicative suffixes KiB (=1024), MiB (=1024*1024), and so on for GiB, TiB, PiB, EiB, ZiB and YiB (the "iB" is optional, e.g. "K" has  the  same  meaning  as[m
+       "KiB"), or the suffixes KB (=1000), MB (=1000*1000), and so on for GB, TB, PB, EB, ZB and YB.[m
+[m
+       [1m-a[0m, [1m--append[0m[m
+              Append the output to [4mfile[24m or to [1mtypescript[0m, retaining the prior contents.[m
+[m
+       [1m-c[0m, [1m--command[0m [4mcommand[24m[m
+              Run the [4mcommand[24m rather than an interactive shell.  This makes it easy for a script to capture the output of a program that behaves differently when its stdout is not a tty.[m
+[m
+       [1m-e[0m, [1m--return[0m[m
+              Return  the  exit code of the child process.  Uses the same format as bash termination on signal termination exit code is 128+n.  The exit code of the child process is always stored in type script file[m
+              too.[m
+[m
+       [1m-f[0m, [1m--flush[0m[m
+              Flush output after each write.  This is nice for telecooperation: one person does `mkfifo foo; script -f foo', and another can supervise real-time what is being done using `cat foo'.[m
+[m
+       [1m--force[0m[m
+              Allow the default output destination, i.e. the typescript file, to be a hard or symbolic link.  The command will follow a symbolic link.[m
+[m
+       [1m-o[0m, [1m--output-limit[0m [4msize[24m[m
+              Limit the size of the typescript and timing files to [4msize[24m and stop the child process after this size is exceeded.  The calculated file size does not include the start and done messages that the  [1mscript[0m[m
+              command prepends and appends to the child process output.  Due to buffering, the resulting output file might be larger than the specified value.[m
+[m
+       [1m-q[0m, [1m--quiet[0m[m
+              Be quiet (do not write start and done messages to standard output).[m
+[m
+       [1m-t[0m[[4mfile[24m], [1m--timing[0m[=[4mfile[24m][m
+              Output  timing data to standard error, or to [4mfile[24m when given.  This data contains two fields, separated by a space.  The first field indicates how much time elapsed since the previous output.  The sec‐[m
+              ond field indicates how many characters were output this time.  This information can be used to replay typescripts with realistic typing and output delays.[m
+[m
+       [1m-V[0m, [1m--version[0m[m
+              Display version information and exit.[m
+[m
+       [1m-h[0m, [1m--help[0m[m
+              Display help text and exit.[m
+[m
+[1mNOTES[0m[m
+       The script ends when the forked shell exits (a [4mcontrol-D[24m for the Bourne shell ([1msh[0m(1)), and [4mexit[24m, [4mlogout[24m or [4mcontrol-d[24m (if [4mignoreeof[24m is not set) for the C-shell, [1mcsh[0m(1)).[m
+[7m Manual page script(1) line 1 (press h for help or q to quit)[27m[K[K [KESCESC[K[[[K66[K~~[K[m
+       Certain interactive commands, such as [1mvi[0m(1), create garbage in the typescript file.  [1mscript[0m works best with commands that do not manipulate the screen, the results are meant to emulate a hardcopy terminal.[m
+[m
+       It is not recommended to run [1mscript[0m in non-interactive shells.  The inner shell of [1mscript[0m is always interactive, and this could lead to unexpected results.  If you use [1mscript[0m in the shell initialization file,[m
+       you have to avoid entering an infinite loop.  You can use for example the [1m.profile[0m file, which is read by login shells only:[m
+[m
+              if test -t 0 ; then[m
+                  script[m
+                  exit[m
+              fi[m
+[m
+       You should also avoid use of script in command pipes, as [1mscript[0m can read more input than you would expect.[m
+[m
+[1mENVIRONMENT[0m[m
+       The following environment variable is utilized by [1mscript[0m:[m
+[m
+       [1mSHELL[0m  If the variable [1mSHELL[0m exists, the shell forked by [1mscript[0m will be that shell.  If [1mSHELL[0m is not set, the Bourne shell is assumed.  (Most shells set this variable automatically).[m
+[m
+[1mSEE[0m [1mALSO[0m[m
+       [1mcsh[0m(1) (for the [4mhistory[24m mechanism), [1mscriptreplay[0m(1)[m
+[m
+[1mHISTORY[0m[m
+       The [1mscript[0m command appeared in 3.0BSD.[m
+[m
+[1mBUGS[0m[m
+       [1mscript[0m places [4meverything[24m in the log file, including linefeeds and backspaces.  This is not what the naive user expects.[m
+[m
+       [1mscript[0m  is primarily designed for interactive terminal sessions.  When stdin is not a terminal (for example: [1mecho[0m [1mfoo[0m [1m|[0m [1mscript[0m), then the session can hang, because the interactive shell within the script ses‐[m
+       sion misses EOF and [1mscript[0m has no clue when to close the session.  See the [1mNOTES[0m section for more information.[m
+[m
+[1mAVAILABILITY[0m[m
+       The script command is part of the util-linux package and is available from Linux Kernel Archive ⟨https://www.kernel.org/pub/linux/utils/util-linux/⟩.[m
+[m
+util-linux                                                                                             June 2014                                                                                              SCRIPT(1)[m
+[7m Manual page script(1) line 35/87 (END) (press h for help or q to quit)[27m[K[K [KESCESC[K[[[K66[K~~[K[K[7m Manual page script(1) line 35/87 (END) (press h for help or q to quit)[27m[K[K[?1l>[?1049l[23;0;0t[1m[7m%[27m[1m[0m                                                                                                                                                                                                                             ]2;dev@ls: ~/Documents/httpstat]1;..ents/httpstat[0m[27m[24m[J(base) [01;32m➜  [36mhttpstat[00m [K[?1h=[?2004hl[90ms /snap/jajalapp/x1/command-httpstat.wrapper[39m[44Dl[39ms[39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [43D[?1l>[?2004l
+]2;ls --color=tty]1;lsjajalapp_1.1.3_amd64.snap  [0m[01;34mparts[0m  [01;34mprime[0m  [01;34msnap[0m  [01;34mstage[0m  typescript
+[1m[7m%[27m[1m[0m                                                                                                                                                                                                                             ]2;dev@ls: ~/Documents/httpstat]1;..ents/httpstat[0m[27m[24m[J(base) [01;32m➜  [36mhttpstat[00m [K[?1h=[?2004hr[90mm httpstat_1.1.3_amd64.snap[39m[27Dr[39me[90ms[90me[90mt[39m[39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [26D[39ms[39me[39mt[?1l>[?2004l
+]2;reset]1;resetc]104[!p[?3;4l[4l>[1m[7m%[27m[1m[0m                                                                                                                                                                                                                             ]2;dev@ls: ~/Documents/httpstat]1;..ents/httpstat[0m[27m[24m[J(base) [01;32m➜  [36mhttpstat[00m [K[?1h=[?2004hs[90mcript[39ms[39mn[90ma[90mp[90mc[90mr[90maft help plugins[39m[20D[39ma[39mp[39mc[39mr[39ma[39mf[39mt[39m [39mh[39me[39ml[39mp[39m [39mp[39ml[39mu[39mg[39mi[39mn[39ms[18D                  [18Dcraft help plugins[?1l>[?2004l
+]2;snapcraft help plugins]1;snapcraftSnapcraft plugins drive different build systems
+
+Each part has a build system . Most parts are built from source using one of
+a range of build systems such as CMake or Scons. Some parts are pre-built
+and just copied into place, for example parts that reuse existing binary
+packages.
+
+You tell snapcraft which build system it must drive by specifying the
+snapcraft plugin for that part. Every part must specify a plugin explicitly
+(when you see a part that does not specify a plugin, that's because the
+actual part definition is in the cloud, where the plugin is specified!)
+
+These plugins implement a lifecycle over the following steps:
+
+  - pull:   retrieve the source for the part from the specified location
+  - build:  drive the build system determined by the choice of plugin
+  - stage:  consolidate desirable files from all the parts in one tree
+  - prime:  distill down to only the files which will go into the snap
+  - snap:   compress the prime tree into the installable snap file
+
+These steps correspond to snapcraft commands. So when you initiate a
+'snapcraft pull' you will invoke the respective plugin for each part in
+the snap, in sequence, to handle the source pull. Each part will then have a
+fully populated parts/<part-name>/src/ directory. Similarly, if you then say
+'snapcraft build' you will invoke the plugin responsible for each part in
+turn, to build the part.
+
+# Snapcraft Lifecycle
+
+## Pull
+
+In this first step, source material is retrieved from the specified
+location, whether that is a URL for a tarball, a local path to a source tree
+inside the snap, a revision control reference to checkout, or something
+specific to the plugin such as PyPI. The plugin might also download
+necessary artifacts, such as the Java SDK, which are not specific to the
+particular part but which are needed by the plugin to handle its type of
+build system.
+
+All the downloaded content for each part goes into the
+`parts/<part-name>/src/` directory, which acts as a cache to prevent
+re-fetching content. You can clean that cache out with 'snapcraft clean'.
+
+## Build
+
+Snapcraft calculates an appropriate sequence to build the parts, based on
+explicit 'after' references and the order of the parts in the
+snapcraft.yaml. Each part is built in the `parts/<part-name>/build`
+directory and installed into `parts/<part-name>/install`.
+
+Note the install step - we might actually want to use built artifacts from
+one part in the build process of another, so the `parts/<part-name>/install`
+directory is useful as a 'working fresh install' of the part.
+
+Between the plugin, the part definition YAML, and the build system of the
+part, it is expected that the part can be built and installed in the right
+place.
+
+At this point you have a tree under `parts/` with a subdirectory for every
+part, and underneath those, separate src, build and install trees for each
+part.
+
+## Stage
+
+We now need to start consolidating the important pieces of each part into a
+single tree. We do this twice - once in a very sweeping way that will
+produce a lot of extraneous materials but is useful for debugging. This is
+the 'stage' step of the lifecycle, because we move a lot of the build output
+from each part into a consolidated tree under `stage/` which has the
+structure of a snap but has way too much extra information.
+
+The important thing about the staging area is that it lets you get all the
+shared libraries in one place and lets you find overlapping content in the
+parts. You can also try this directory as if it were a snap, and you'll have
+all the debugging information in the tree, which is useful for developers.
+
+Each part describes its own staging content - the files that should be
+staged. The part will often describe "chunks" of content, called filesets,
+so that they can be referred to as a useful set rather than having to call
+out individual files.
+
+## Prime
+
+It is useful to have a directory tree which exactly mirrors the structure of
+the final snap. This is the `prime/` directory, and the lifecycle includes a
+'prime' step which copies only that final, required content from the
+`stage/` directory into the `prime/` directory.
+
+So the `prime/` directory contains only the content that will be put into
+the final snap, unlike the staging area which may include debug and
+development files not destined for your snap.
+
+The snap metadata will also be placed in `./prime/meta` during the prime
+step, so this `./prime` directory is useful for inspecting exactly what is
+going into your snap or to conduct any final post-processing on snapcraft's
+output.
+
+## Snap
+
+The final step in the snapcraft lifecycle builds a snap out of the `prime/`
+directory. It will be in the top level directory, alongside snapcraft.yaml,
+called <name>-<version>-<arch>.snap
+
+
+# Standard part definition keywords
+
+There are several builtin keywords which can be used in any part regardless
+of the choice of plugin.
+
+  - after: [part, part, part...]
+
+    Snapcraft will make sure that it builds all of the listed parts before
+    it tries to build this part. Essentially these listed dependencies for
+    this part, useful when the part needs a library or tool built by another
+    part.
+
+    If such a dependency part is not defined in this snapcraft.yaml, it must
+    be defined in the cloud parts library, and snapcraft will retrieve the
+    definition of the part from the cloud. In this way, a shared library of
+    parts is available to every snap author - just say 'after' and list the
+    parts you want that others have already defined.
+
+  - build-packages: [pkg, pkg, pkg...]
+
+    A list of packages to install on the build host before building
+    the part. The files from these packages typically will not go into the
+    final snap unless they contain libraries that are direct dependencies of
+    binaries within the snap (in which case they'll be discovered via `ldd`),
+    or they are explicitly described in stage-packages.
+
+  - stage-packages: YAML list
+
+    A set of packages to be downloaded and unpacked to join the part
+    before it's built. Note that these packages are not installed on the host.
+    Like the rest of the part, all files from these packages will make it into
+    the final snap unless filtered out via the `snap` keyword.
+
+    One may simply specify packages in a flat list, in which case the packages
+    will be fetched and unpacked regardless of build environment. In addition,
+    a specific grammar made up of sub-lists is supported here that allows one
+    to filter stage packages depending on various selectors (e.g. the target
+    arch), as well as specify optional packages. The grammar is made up of two
+    nestable statements: 'on' and 'try'.
+
+    Let's discuss `on`.
+
+        - on <selector>[,<selector>...]:
+          - ...
+        - else[ fail]:
+          - ...
+
+    The body of the 'on' clause is taken into account if every (AND, not OR)
+    selector is true for the target build environment. Currently the only
+    selectors supported are target architectures (e.g. amd64).
+
+    If the 'on' clause doesn't match and it's immediately followed by an 'else'
+    clause, the 'else' clause must be satisfied. An 'on' clause without an
+    'else' clause is considered satisfied even if no selector matched. The
+    'else fail' form allows erroring out if an 'on' clause was not matched.
+
+    For example, say you only wanted to stage `foo` if building for amd64 (and
+    not stage `foo` if otherwise):
+
+        - on amd64: [foo]
+
+    Building on that, say you wanted to stage `bar` if building on an arch
+    other than amd64:
+
+        - on amd64: [foo]
+        - else: [bar]
+
+    You can nest these for more complex behaviors:
+
+        - on amd64: [foo]
+        - else:
+          - on i386: [bar]
+          - on armhf: [baz]
+
+    If your project requires a package that is only available on amd64, you can
+    fail if you're not building for amd64:
+
+        - on amd64: [foo]
+        - else fail
+
+    Now let's discuss `try`:
+
+        - try:
+          - ...
+        - else:
+          - ...
+
+    The body of the 'try' clause is taken into account only when all packages
+    contained within it are valid. If not, if it's immediately followed by
+    'else' clauses they are tried in order, and one of them must be satisfied.
+    A 'try' clause with no 'else' clause is considered satisfied even if it
+    contains invalid packages.
+
+    For example, say you wanted to stage `foo`, but it wasn't available for all
+    architectures. Assuming your project builds without it, you can make it an
+    optional stage package:
+
+        - try: [foo]
+
+    You can also add alternatives:
+
+        - try: [foo]
+        - else: [bar]
+
+    Again, you can nest these for more complex behaviors:
+
+        - on amd64: [foo]
+        - else:
+          - try: [bar]
+
+  - organize: YAML
+
+    Snapcraft will rename files according to this YAML sub-section. The
+    content of the 'organize' section consists of old path keys, and their
+    new values after the renaming.
+
+    This can be used to avoid conflicts between parts that use the same
+    name, or to map content from different parts into a common conventional
+    file structure. For example:
+
+      organize:
+        usr/oldfilename: usr/newfilename
+        usr/local/share/: usr/share/
+
+    The key is the internal part filename, the value is the exposed filename
+    that will be used during the staging process. You can rename whole
+    subtrees of the part, or just specific files.
+
+    Note that the path is relative (even though it is "usr/local") because
+    it refers to content underneath parts/<part-name>/install which is going
+    to be mapped into the stage and prime areas.
+
+  - filesets: YAML
+
+    When we map files into the stage and prime areas on the way to putting
+    them into the snap, it is convenient to be able to refer to groups of
+    files as well as individual files.  Snapcraft lets you name a fileset
+    and then use it later for inclusion or exclusion of those files from the
+    resulting snap.
+
+    For example, consider man pages of header files.. You might want them
+    in, or you might want to leave them out, but you definitely don't want
+    to repeatedly have to list all of them either way.
+
+    This section is thus a YAML map of fileset names (the keys) to a list of
+    filenames. The list is built up by adding individual files or whole
+    subdirectory paths (and all the files under that path) and wildcard
+    globs, and then pruning from those paths.
+
+    The wildcard * globs all files in that path. Exclusions are denoted by
+    an initial `-`.
+
+    For example you could add usr/local/* then remove usr/local/man/*:
+
+      filesets:
+        allbutman: [ usr/local/*, -usr/local/man/* ]
+        manpages: [ usr/local/man ]
+
+    Filenames are relative to the part install directory in
+    `parts/<part-name>/install`. If you have used 'organize' to rename files
+    then the filesets will be built up from the names after organization.
+
+  - stage: YAML file and fileset list
+
+    A list of files from a part install directory to copy into `stage/`.
+    Rules applying to the list here are the same as those of filesets.
+    Referencing of fileset keys is done with a $ prefixing the fileset key,
+    which will expand with the value of such key.
+
+    For example:
+
+      stage:
+        - usr/lib/*   # Everything under parts/<part-name>/install/usr/lib
+        - -usr/lib/libtest.so   # Excludng libtest.so
+        - $manpages             # Including the 'manpages' fileset
+
+  - snap: YAML file and fileset list
+
+    A list of files from a part install directory to copy into `prime/`.
+    This section takes exactly the same form as the 'stage' section  but the
+    files identified here will go into the ultimate snap (because the
+    `prime/` directory reflects the file structure of the snap with no
+    extraneous content).
+
+  - prepare: shell script
+
+    If present, the shell script defined here is run before the `build` step
+    of the plugin starts. The working directory is the base build
+    directory for the given part. The defined script is run with `/bin/sh`.
+
+    For example:
+
+      prepare: |
+        cd scripts
+        ./bootstrap.sh
+
+  - build: shell script
+
+    If present, the shell script defined here is run instead of the `build`
+    step of the plugin. The working directory is the base build directory
+    for the given part. The defined script is run with `/bin/sh`.
+
+    For example:
+
+      plugin: make
+      build: |
+        make project
+        make test
+        make special-install
+
+  - install: shell script
+
+    If present, the shell script defined here is run after the `build` step
+    of the plugin has finished. The working directory is the base build
+    directory for the given part. The defined script is run with `/bin/sh`.
+
+    For example:
+
+      install: |
+        sed -i 's|/usr/bin|$SNAP/usr/bin|g' my-bin-artifact.sh
+        mv my-bin-artifact.sh $SNAPCRAFT_PART_INSTALL/bin/my-bin-build.sh
+
+  - build-attributes: [attribute1, attribute2]
+
+    A list of special attributes that affect the build of this specific part.
+    Supported attributes:
+
+      - no-system-libraries:
+        Do not automatically copy required libraries from the system to satisfy
+        the dependencies of this part. This might be useful if one knows these
+        dependencies will be satisfied in other manner, e.g. via content
+        sharing from other snaps.
+
+      - no-install:
+        Do not run the install target provided by the plugin's build system.
+
+        Supported by: kbuild
+
+      - debug:
+        Plugins that support the concept of build types build in Release mode
+        by default. Setting the 'debug' attribute requests that they instead
+        build in Debug mode.
+
+[1m[7m%[27m[1m[0m                                                                                                                                                                                                                             ]2;dev@ls: ~/Documents/httpstat]1;..ents/httpstat[0m[27m[24m[J(base) [01;32m➜  [36mhttpstat[00m [K[?1h=[?2004h[?1l>[?2004l
+[1m[7m%[27m[1m[0m                                                                                                                                                                                                                             ]2;dev@ls: ~/Documents/httpstat]1;..ents/httpstat[0m[27m[24m[J(base) [01;32m➜  [36mhttpstat[00m [K[?1h=[?2004h[0m[27m[24m[J(base) [01;32m➜  [36mhttpstat[00m l[90ms[39ml[39ms[?1l>[?2004l
+]2;ls --color=tty]1;ls[0m[01;34mparts[0m  [01;34mprime[0m  [01;34msnap[0m  [01;34mstage[0m  typescript
+[1m[7m%[27m[1m[0m                                                                                ]2;dev@ls: ~/Documents/httpstat]1;..ents/httpstat[0m[27m[24m[J(base) [01;32m➜  [36mhttpstat[00m [K[?1h=[?2004hl[90ms[39ml[39ms [90m/snap/jajalapp/x1/command-httpstat.wrapper[39m[42D[39ms[90mn[90ma[90mp[90m/[90ms[90mn[90ma[90mp[90mc[90mr[90ma[90mf[90mt[90m.[90my[90ma[90mm[90ml[90m [39m[39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [41D[39mn[39ma[39mp[39m[1m/[0m[0m/[39ms[39mn[39ma[39mp[39mc[39mr[39ma[39mf[39mt[39m.[39my[39ma[39mm[39ml[39m[1m [0m[0m 
+[J[01;34mparts[0m/      [J[01;34mprime[0m/      [J[01;34msnap[0m/       [J[01;34mstage[0m/      [Jtypescript[J[A[0m[27m[24m[19Cls snap/snapcraft.yaml[K[1C[90m [39m[90ml[90mm[90ma[90my[90m.[90mt[90mf[90ma[90mr[90mc[90mp[90ma[90mn[90ms[90m/[90mp[90ma[90mn[90m/[90ms[90mn[90ma[90mp[90m/[90mj[90ma[90mj[90ma[90ml[90ma[90mp[90mp[90m/[90mx[90m1[90m/[90mc[90mo[90mmmand-httpstat.wrapper[39m[42D[39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [43Dl[90ms[39m [39m m[90man script[39m[9Dm[39mk[90md[90mi[90mr[90m [90m-[90mp[90m [90mp[90marts/my-part/src/[39m[25D[39md[39mi[39mr[39m [39ms[90me[90ml[90mf[90mT[90mr[90ma[90mi[90mn[39m[39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [20D[39mn[39m [39m [39m [39m [39m [39m [39m ap[1m/[0m[0m/pl
+[J[A[32Cugins[?1l>[?2004l
+[J]2;mkdir snap/plugins]1;mkdir[1m[7m%[27m[1m[0m                                                                                ]2;dev@ls: ~/Documents/httpstat]1;..ents/httpstat[0m[27m[24m[J(base) [01;32m➜  [36mhttpstat[00m [K[?1h=[?2004hn[90mano snap/snapcraft.yaml [39m[24Dn[39ma[39mn[39mo[39m [39ms[39mn[39ma[39mp[39m[1m/[0m[0m/[39mp[39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [14Dlugins[1m/[0m[0m/my_plygin    ugin.py[?1l>[?2004l
+]2;nano snap/plugins/my_plugin.py]1;nano[?1049h[22;0;0t[1;24r(B[m[4l[?7h[39;49m[?1h=[?1h=[?1h=[?25l[39;49m(B[m[H[2J[22;35H(B[0;7m[ New File ](B[m[H(B[0;7m  GNU nano 3.2               snap/plugins/my_plugin.py                          [1;79H(B[m[23d(B[0;7m^G(B[m Get Help  (B[0;7m^O(B[m Write Out (B[0;7m^W(B[m Where Is  (B[0;7m^K(B[m Cut Text  (B[0;7m^J(B[m Justify   (B[0;7m^C(B[m Cur Pos[24d(B[0;7m^X(B[m Exit[14G(B[0;7m^R(B[m Read File (B[0;7m^\(B[m Replace   (B[0;7m^U(B[m Uncut Text(B[0;7m^T(B[m To Spell  (B[0;7m^_(B[m Go To Line[22d[3d[39;49m(B[m[?12l[?25h[?25l[1;71H(B[0;7mModified(B[m[3di[?12l[?25h[?25lm[?12l[?25h[?25lp[?12l[?25h[?25lo[?12l[?25h[?25lr[?12l[?25h[?25l(B[0;1m[36mimport[39m(B[m[?12l[?25h[?25l[42m [49m(B[m[?12l[?25h[?25l s[?12l[?25h[?25ln[?12l[?25h[?25la[?12l[?25h[?25lp[?12l[?25h[?25lc[?12l[?25h[?25lr[?12l[?25h[?25la[?12l[?25h[?25lf[?12l[?25h[?25lt[?12l[?25h[?25l[4d[?12l[?25h[?25l[5d[?12l[?25h[?25lc[?12l[?25h[?25ll[?12l[?25h[?25la[?12l[?25h[?25ls[?12l[?25h[?25l(B[0;1m[36mclass[39m(B[m[?12l[?25h[?25l[42m [49m(B[m[?12l[?25h[?25l M[?12l[?25h[?25lY[22d[K[5;9H[?12l[?25h[?25l [?12l[?25h[?25ly[?12l[?25h[?25lP[?12l[?25h[?25ll[?12l[?25h[?25lu[?12l[?25h[?25lg[?12l[?25h[?25li[?12l[?25h[?25ln[?12l[?25h[?25l([?12l[?25h[?25ls[?12l[?25h[?25ln[?12l[?25h[?25la[?12l[?25h[?25lp[?12l[?25h[?25lc[?12l[?25h[?25lr[?12l[?25h[?25la[?12l[?25h[?25lf[?12l[?25h[?25lt[?12l[?25h[?25l.[?12l[?25h[?25lB[?12l[?25h[?25la[?12l[?25h[?25ls[?12l[?25h[?25le[?12l[?25h[?25ll[?12l[?25h[?25l [?12l[?25h[?25lP[?12l[?25h[?25ll[?12l[?25h[?25lu[?12l[?25h[?25lg[?12l[?25h[?25li[?12l[?25h[?25ln[?12l[?25h[?25l)[?12l[?25h[?25l:[?12l[?25h[?25l[6d[?12l[?25h[?25l[23;14H       (B[0;7mM-D(B[m DOS Format      (B[0;7mM-A(B[m Append          (B[0;7mM-B(B[m Backup File[24;2H(B[0;7mC(B[m Cancel           (B[0;7mM-M(B[m Mac Format      (B[0;7mM-P(B[m Prefix          (B[0;7m^T(B[m To Files[K[22d(B[0;7mFile Name to Write: snap/plugins/my_plugin.py                                   [22;1H(B[m[22;46H[?12l[?25h[?25l[K[1;79H[1;71H(B[0;7m        (B[m[22;32H(B[0;7m[ Wrote 4 lines ](B[m[23;14H(B[0;7m^O(B[m Write Out (B[0;7m^W(B[m Where Is  (B[0;7m^K(B[m Cut Text  (B[0;7m^J(B[m Justify   (B[0;7m^C(B[m Cur Pos[24;2H(B[0;7mX(B[m Exit      (B[0;7m^R(B[m Read File (B[0;7m^\(B[m Replace   (B[0;7m^U(B[m Uncut Text(B[0;7m^T(B[m To Spell  (B[0;7m^_(B[m Go To Line[22d[6d[?12l[?25h[?25l[22d[J[24;80H[?12l[?25h[24;1H[?1049l[23;0;0t[?1l>[1m[7m%[27m[1m[0m                                                                                ]2;dev@ls: ~/Documents/httpstat]1;..ents/httpstat[0m[27m[24m[J(base) [01;32m➜  [36mhttpstat[00m [K[?1h=[?2004hnano snap/plugins/my_plugin.py[30D[P[29C [30D[P[28C [29D[P[27C [28D[P[26C [27Dv snap/plugins/my_plugin.py[26Dvi snap/plugins/my_plugin.py[26Dm snap/plugins/my_plugin.py[26D[?1l>[?2004l
+]2;vim snap/plugins/my_plugin.py]1;vim[?2004h[?1049h[22;0;0t[?1h=[?2004h[1;24r[?12h[?12l[22;2t[22;1t[27m[23m[29m[m[H[2J[?25l[24;1H"snap/plugins/my_plugin.py" 4L, 57C[2;1H▽[6n[2;1H  [1;1H[>c]10;?]11;?[1;1H[38;5;130m  1 [m[35mimport[m snapcraft
+[38;5;130m  2 
+  3 class[m [36mMyPlugin[m(snapcraft.BasePlugin):
+[38;5;130m  4 [m
+[94m~                                                                               [6;1H~                                                                               [7;1H~                                                                               [8;1H~                                                                               [9;1H~                                                                               [10;1H~                                                                               [11;1H~                                                                               [12;1H~                                                                               [13;1H~                                                                               [14;1H~                                                                               [15;1H~                                                                               [16;1H~                                                                               [17;1H~                                                                               [18;1H~                                                                               [19;1H~                                                                               [20;1H~                                                                               [21;1H~                                                                               [22;1H~                                                                               [23;1H~                                                                               [m[24;63H1,1[11CAll[1;5H[?25hP+q436f\P+q6b75\P+q6b64\P+q6b72\P+q6b6c\P+q2332\P+q2334\P+q2569\P+q2a37\P+q6b31\[27m[23m[29m[m[H[2J[?25l[1;1H[93m  1 [m[38;5;81mimport[m snapcraft
+[93m  2 
+  3 [m[93mclass[m [1m[96mMyPlugin[m(snapcraft.BasePlugin):
+[93m  4 [m
+[94m~                                                                               [6;1H~                                                                               [7;1H~                                                                               [8;1H~                                                                               [9;1H~                                                                               [10;1H~                                                                               [11;1H~                                                                               [12;1H~                                                                               [13;1H~                                                                               [14;1H~                                                                               [15;1H~                                                                               [16;1H~                                                                               [17;1H~                                                                               [18;1H~                                                                               [19;1H~                                                                               [20;1H~                                                                               [21;1H~                                                                               [22;1H~                                                                               [23;1H~                                                                               [m[24;63H1,1[11CAll"snap/plugins/my_plugin.py" 4L, 57C[1;5H[?25h[?25l[24;66H6[1;20H[?25h[?25l[24;1H[38;5;224mThe ycmd server SHUT DOWN (re... a Python 2 interpreter path.[m[24;63H[K[24;63H1,16[10CAll[1;20H[?25h[?25l[24;63H2,0-1[2;5H[?25h[?25l[24;63H3,16 [3;20H[?25h[?25l[24;63H4,0-1[4;5H[?25h[?25l[24;1H[1m-- INSERT --[m[24;13H[K[24;63H4,1[11CAll[4;5H[?25h[?25l[94m~                                                                               [m[24;63H3,38[3;42H[?25h[?25l
+[93m  4 [m[97m[101m    [m[4;9H[K[24;63H4,5 [4;9H[?25h[?25l    @[24;65H6[4;10H[?25h[?25l[38;5;81m@[m[1m[96mc[m[24;65H7[4;11H[?25h[?25l[1m[96ml[m[24;65H8[4;12H[?25h[?25l[1m[96ma[m[24;65H9[4;13H[?25h[?25l[1m[96ms[m[24;65H10[4;14H[?25h[?25l[1m[96ms[m[24;66H1[4;15H[?25h[?25l[1m[96mm[m[24;66H2[4;16H[?25h[?25l[1m[96me[m[24;66H3[4;17H[?25h[?25l[1m[96mt[m[24;66H4[4;18H[?25h[?25l[1m[96mo[m[24;66H5[4;19H[?25h[?25l[1m[96md[m[24;66H6[4;20H[?25h[?25l[1m[96mh[m[24;66H7[4;21H[?25h[?25l[4;20H[K[24;66H6[4;20H[?25h[?25l[4;19H[K[24;66H5[4;19H[?25h[?25l[4;18H[K[24;66H4[4;18H[?25h[?25l[1m[96mh[m[24;66H5[4;19H[?25h[?25l[1m[96mo[m[24;66H6[4;20H[?25h[?25l[1m[96md[m[24;66H7[4;21H[?25h[?25l
+[93m  5 [m[97m[101m    [m[5;9H[K[24;63H5,5 [5;9H[?25h[?25l    s[24;65H6[5;10H[?25h[?25l[97m[101m    [m[5;9H[K[24;65H5[5;9H[?25h[?25l    d[24;65H6[5;10H[?25h[?25le[24;65H7[5;11H[?25h[?25l[93mdef[m[24;65H8[5;12H[?25h[?25l[24;65H9[5;13H[?25h[?25l[1m[96ms[m[24;65H10[5;14H[?25h[?25l[1m[96mc[m[24;66H1[5;15H[?25h[?25l[1m[96mh[m[24;66H2[5;16H[?25h[?25l[1m[96me[m[24;66H3[5;17H[?25h[?25l[1m[96mm[m[24;66H4[5;18H[?25h[?25l[1m[96ma[m[24;66H5[5;19H[?25h[?25l()[46m()[m[24;66H6[5;20H[?25h[?25l[46mc[m)c[46m)[m[24;66H7[5;21H[?25h[?25l[46ml[m)l[46m)[m[24;66H8[5;22H[?25h[?25l[46ms[m)s[46m)[m[24;66H9[5;23H[?25h[?25l[24;65H20[5;24H[?25h[?25l;(cls)[24;66H1[5;25H[?25h[?25l[5;24H[K[5;19H[46m([mcls[46m)[m[24;66H0[5;24H[?25h[?25l:(cls)[24;66H1[5;25H[?25h[?25l
+[93m  6 [m[97m[101m        [m[6;13H[K[24;63H6,9 [6;13H[?25h[?25l[6;5H        s[24;65H10[6;14H[?25h[?25lc[24;66H1[6;15H[?25h[?25lh[24;66H2[6;16H[?25h[?25le[24;66H3[6;17H[?25h[?25lm[24;66H4[6;18H[?25h[?25la[24;66H5[6;19H[?25h[?25l[97m[101m [m[24;66H6[6;20H[?25h[?25l =[24;66H7[6;21H[?25h[?25l[97m[101m [m[24;66H8[6;22H[?25h[?25l s[24;66H9[6;23H[?25h[?25lu[24;65H20[6;24H[?25h[?25lp[24;66H1[6;25H[?25h[?25le[24;66H2[6;26H[?25h[?25l[1m[96msuper[m[24;66H3[6;27H[?25h[?25l()[46m()[m[24;66H4[6;28H[?25h[?25l[1C)()[24;66H5[6;29H[?25h[?25l.)[24;66H6[6;30H[?25h[?25ls)[24;66H7[6;31H[?25h[?25lc)[24;66H8[6;32H[?25h[?25lh)[24;66H9[6;33H[?25h[?25le)[24;65H30[6;34H[?25h[?25lm)[24;66H1[6;35H[?25h[?25la)[24;66H2[6;36H[?25h[?25l())[46m()[m[24;66H3[6;37H[?25h[?25l()[24;66H5[6;39H[?25h[?25l[6;38H[K[6;36H[46m()[m[24;66H4[6;38H[?25h[?25l
+[93m  7 [m[97m[101m        [m[7;13H[K[6;36H()[24;63H7,9 [7;13H[?25h[?25l[7;5H[K[8;1H[93m  8 [m[97m[101m        [m[8;13H[K[24;63H8[8;13H[?25h[?25l[8;5H        s[24;65H10[8;14H[?25h[?25lc[24;66H1[8;15H[?25h[?25lh[24;66H2[8;16H[?25h[?25le[24;66H3[8;17H[?25h[?25lm[24;66H4[8;18H[?25h[?25la[24;66H5[8;19H[?25h[?25l[][46m[][m[24;66H6[8;20H[?25h[?25l[95m[46m'[m[95m'[m][[95m'[m[24;66H7[8;21H[?25h[?25l[95mp'[m][24;66H8[8;22H[?25h[?25l[95mr'[m][24;66H9[8;23H[?25h[?25l[95mo'[m][24;65H20[8;24H[?25h[?25l[95mp'[m][24;66H1[8;25H[?25h[?25l[95me'[m][24;66H2[8;26H[?25h[?25l[95mr'[m][24;66H3[8;27H[?25h[?25l[95mt'[m][24;66H4[8;28H[?25h[?25l[95mi'[m][24;66H5[8;29H[?25h[?25l[95me'[m][24;66H6[8;30H[?25h[?25l[95ms'[m][24;66H7[8;31H[?25h[?25l[8;19H[46m[[12C][m[24;66H8[8;32H[?25h[?25l[24;66H9[8;33H[?25h[?25l[][8;19H[[12C][46m[][m[24;65H30[8;34H[?25h[?25l[95m[46m'[m[95m'[m][[95m'[m[24;66H1[8;35H[?25h[?25l[95mm'[m][24;66H2[8;36H[?25h[?25l[95my'[m][24;66H3[8;37H[?25h[?25l[95m-'[m][24;66H4[8;38H[?25h[?25l[95mp'[m][24;66H5[8;39H[?25h[?25l[95mr'[m][24;66H6[8;40H[?25h[?25l[95mo'[m][24;66H7[8;41H[?25h[?25l[95mp'[m][24;66H8[8;42H[?25h[?25l[95me'[m][24;66H9[8;43H[?25h[?25l[95mr'[m][24;65H40[8;44H[?25h[?25l[95mt'[m][24;66H1[8;45H[?25h[?25l[95my'[m][24;66H2[8;46H[?25h[?25l[8;33H[46m[[13C][m[24;66H4[8;48H[?25h[?25l[97m[101m [m[8;33H[[13C][24;66H5[8;49H[?25h[?25l =[24;66H6[8;50H[?25h[?25l[97m[101m [m[24;66H7[8;51H[?25h{ [?25l {}[46m{}[m[24;66H8[8;52H[?25h[?25l[8;52H[K[9;1H[93m  9 [m        }[9;14H[K[9;13H[46m}[m[24;63H9,9 [9;13H[?25h[?25l[95m[46m'[m[95m'[m}[8;51H{[9;13H[95m'[m[24;65H10[9;14H[?25h[?25l[95mt'[m}[24;66H1[9;15H[?25h[?25l[95my'[m}[24;66H2[9;16H[?25h[?25l[95mp'[m}[24;66H3[9;17H[?25h[?25l[95me'[m}[24;66H4[9;18H[?25h[?25l[8;51H[46m{[9;19H}[m[24;66H5[9;19H[?25h[?25l    [95m't[m[95m[46my[m[95mpe'[m:}[95my[m[4C[46m}[m[24;65H20[9;24H[?25h[?25l[46m [m} [46m}[m[24;66H1[9;25H[?25h[?25l[95m[46m'[m[95m'[m}[8;51H{[9;25H[95m'[m[24;66H2[9;26H[?25h[?25l[95ms'[m}[24;66H3[9;27H[?25h[?25l[95mt'[m}[24;66H4[9;28H[?25h[?25l[95mr'[m}[24;66H5[9;29H[?25h[?25l[95mi'[m}[24;66H6[9;30H[?25h[?25l[95mn'[m}[24;66H7[9;31H[?25h[?25l[95mg'[m}[24;66H8[9;32H[?25h[?25l[8;51H[46m{[9;33H}[m[24;65H30[9;34H[?25h[?25l[24;65H29[9;33H[?25h[?25l[9;33H[K[10;1H[93m 10 [m        }[10;14H[K[10;13H[46m}[m[24;63H10,[10;13H[?25h[?25l[8;51H{[10;13H}[24;63H9,9 [9;13H[?25h[24;1H[K[9;12H[?25l[24;63H9,8[11CAll[9;12H[?25h[?25l[24;63H[K[24;1H:[?2004h[?25h[?25l[?25hw[?25l[?25h[?25l"snap/plugins/my_plugin.py" 10L, 216C written[?2004l[?2004h[?2004l[?2004h[17C9,8[11CAll[24;63H[K[24;63H9,8[11CAll[9;12H[?25h[?25l[24;63H10,8[10;12H[?25h[?25l[24;1H[1m-- INSERT --[m[24;13H[K[24;63H10,9[10CAll[8;51H[46m{[10;13H}[?25h[?25l[m[24;66H10[10;14H[?25h[?25l
+[93m 11 [m[97m[101m        [m[11;13H[K[24;63H[K[24;63H11,9[10CAll[8;51H{[10;13H}[11;13H[?25h[?25l[11;5H        s[24;66H10[11;14H[?25h[?25lc[24;67H1[11;15H[?25h[?25lh[24;67H2[11;16H[?25h[?25le[24;67H3[11;17H[?25h[?25lm[24;67H4[11;18H[?25h[?25la[24;67H5[11;19H[?25h[?25l[][46m[][m[24;67H6[11;20H[?25h[?25l[95m[46m'[m[95m'[m][[95m'[m[24;67H7[11;21H[?25h[?25l[95mr'[m][24;67H8[11;22H[?25h[?25l[95me'[m][24;67H9[11;23H[?25h[?25l[95mq'[m][24;66H20[11;24H[?25h[?25l[95mu'[m][24;67H1[11;25H[?25h[?25l[95mi'[m][24;67H2[11;26H[?25h[?25l[95mr'[m][24;67H3[11;27H[?25h[?25l[95me'[m][24;67H4[11;28H[?25h[?25l[95md'[m][24;67H5[11;29H[?25h[?25l[11;19H[46m[[10C][m[24;67H7[11;31H[?25h[?25l.[11;19H[[10C][24;67H8[11;32H[?25h[?25la[24;67H9[11;33H[?25h[?25lp[24;66H30[11;34H[?25h[?25lp[24;67H1[11;35H[?25h[?25le[24;67H2[11;36H[?25h[?25ln[24;67H3[11;37H[?25h[?25ld[24;67H4[11;38H[?25h[?25l()[46m()[m[24;67H5[11;39H[?25h[?25l[95m[46m'[m[95m'[m)([95m'[m[24;67H6[11;40H[?25h[?25l[95mm'[m)[24;67H7[11;41H[?25h[?25l[95my'[m)[24;67H8[11;42H[?25h[?25l[95m_'[m)[24;67H9[11;43H[?25h[?25l[95m'[m)[11;44H[K[24;67H8[11;42H[?25h[?25l[95m-'[m)[24;67H9[11;43H[?25h[?25l[95mp'[m)[24;66H40[11;44H[?25h[?25l[95mr'[m)[24;67H1[11;45H[?25h[?25l[95mo'[m)[24;67H2[11;46H[?25h[?25l[95mp'[m)[24;67H3[11;47H[?25h[?25l[95me'[m)[24;67H4[11;48H[?25h[?25l[95mr'[m)[24;67H5[11;49H[?25h[?25l[95mt'[m)[24;67H6[11;50H[?25h[?25l[95my'[m)[24;67H7[11;51H[?25h[?25l[11;38H[46m([13C)[m[24;67H9[11;53H[?25h[?25l
+[93m 12 [m[97m[101m        [m[12;13H[K[11;38H([13C)[24;64H2,9 [12;13H[?25h[?25l[12;5H[K[13;1H[93m 13 [m[97m[101m        [m[13;13H[K[24;64H3[13;13H[?25h[?25l[13;5H        r[24;66H10[13;14H[?25h[?25le[24;67H1[13;15H[?25h[?25lt[24;67H2[13;16H[?25h[?25lu[24;67H3[13;17H[?25h[?25lr[24;67H4[13;18H[?25h[?25l[93mreturn[m[24;67H5[13;19H[?25h[?25l[97m[101m [m[24;67H6[13;20H[?25h[?25l s[24;67H7[13;21H[?25h[?25lc[24;67H8[13;22H[?25h[?25lh[24;67H9[13;23H[?25h[?25le[24;66H20[13;24H[?25h[?25lm[24;67H1[13;25H[?25h[?25la[24;67H2[13;26H[?25h[?25l
+[93m 14 [m[97m[101m    [m[14;9H[K[24;64H4,5 [14;9H[?25h[?25l    d[24;66H6[14;10H[?25h[?25le[24;66H7[14;11H[?25h[?25l[93mdef[m[24;66H8[14;12H[?25h[?25l[24;66H9[14;13H[?25h[?25l[1m[96mp[m[24;66H10[14;14H[?25h[?25l[1m[96mu[m[24;67H1[14;15H[?25h[?25l[1m[96ml[m[24;67H2[14;16H[?25h[?25l[1m[96ml[m[24;67H3[14;17H[?25h[?25l()[46m()[m[24;67H4[14;18H[?25h[?25l[46ms[m)s[46m)[m[24;67H5[14;19H[?25h[?25l[46me[m)e[46m)[m[24;67H6[14;20H[?25h[?25l[46ml[m)l[46m)[m[24;67H7[14;21H[?25h[?25l[46mf[m)f[46m)[m[24;67H8[14;22H[?25h[?25l[24;67H9[14;23H[?25h[?25l;[14;17H(self)[24;66H20[14;24H[?25h[?25l[14;23H[K[14;17H[46m([mself[46m)[m[24;66H19[14;23H[?25h[?25l:[14;17H(self)[24;66H20[14;24H[?25h[?25l
+[93m 15 [m[97m[101m        [m[15;13H[K[24;64H5,9 [15;13H[?25h[?25l[15;5H        s[24;66H10[15;14H[?25h[?25lu[24;67H1[15;15H[?25h[?25lp[24;67H2[15;16H[?25h[?25le[24;67H3[15;17H[?25h[?25l[1m[96msuper[m[24;67H4[15;18H[?25h[?25l()[46m()[m[24;67H5[15;19H[?25h[?25l[24;67H6[15;20H[?25h[?25l.()[24;67H7[15;21H[?25h[?25lp[24;67H8[15;22H[?25h[?25lu[24;67H9[15;23H[?25h[?25ll[24;66H20[15;24H[?25h[?25ll[24;67H1[15;25H[?25h[?25l()[46m()[m[24;67H2[15;26H[?25h[?25l[95m[46m0[m)[95m0[m[46m)[m[24;67H3[15;27H[?25h[?25l)[15;27H[K[15;26H[46m)[m[24;67H2[15;26H[?25h[?25l[24;67H3[15;27H[?25h[?25l
+[93m 16 [m[97m[101m        [m[16;13H[K[15;25H()[24;64H6,9 [16;13H[?25h[?25l[16;5H        p[24;66H10[16;14H[?25h[?25lr[24;67H1[16;15H[?25h[?25li[24;67H2[16;16H[?25h[?25ln[24;67H3[16;17H[?25h[?25l[1m[96mprint[m[24;67H4[16;18H[?25h[?25l()[46m()[m[24;67H5[16;19H[?25h[?25l[95m[46m"[m[95m"[m)([95m"[m[24;67H6[16;20H[?25h[?25l[95m)[m[16;21H[K[24;67H5[16;19H[?25h[?25l[95m''")[m[24;67H6[16;20H[?25h[?25l[95m")[m[16;22H[K[16;20H[?25h[?25l[95m)[m[16;21H[K[16;18H[46m([m[1C[95m[46m)[?25h[?25l[m)[16;20H[K[16;19H[46m)[m[24;67H5[16;19H[?25h[?25l[95m[46m'[m[95m'[m)([95m'[m[24;67H6[16;20H[?25h[?25l[95mw'[m)[24;67H7[16;21H[?25h[?25l[95mh'[m)[24;67H8[16;22H[?25h[?25l[95me'[m)[24;67H9[16;23H[?25h[?25l[95m '[m)[24;66H20[16;24H[?25h[?25l[95mh'[m)[24;67H1[16;25H[?25h[?25l[95ma'[m)[24;67H2[16;26H[?25h[?25l[95mv'[m)[24;67H3[16;27H[?25h[?25l[95me'[m)[24;67H4[16;28H[?25h[?25l[95m '[m)[24;67H5[16;29H[?25h[?25l[95mp'[m)[24;67H6[16;30H[?25h[?25l[95mu'[m)[24;67H7[16;31H[?25h[?25l[95ml'[m)[24;67H8[16;32H[?25h[?25l[95ml'[m)[24;67H9[16;33H[?25h[?25l[95me'[m)[24;66H30[16;34H[?25h[?25l[95md'[m)[24;67H1[16;35H[?25h[?25l[95m '[m)[24;67H2[16;36H[?25h[?25l[95m-'[m)[24;67H3[16;37H[?25h[?25l[95m '[m)[24;67H4[16;38H[?25h[?25l[95mb'[m)[24;67H5[16;39H[?25h[?25l[95my'[m)[24;67H6[16;40H[?25h[?25l[95m '[m)[24;67H7[16;41H[?25h{[95m'[?25l{}'[m)[95m[46m{}[m[24;67H8[16;42H[?25h[?25l[1C[95m}'[m)[95m{}[m[24;67H9[16;43H[?25h[?25l[95m'[m)[16;45H[K[16;41H[95m[46m{}[m[24;67H8[16;42H[?25h[?25l[95m[46m}'[m)[16;44H[K[16;41H[95m}'[m[24;67H7[16;41H[?25h[?25l[95m'[m)[16;43H[K[16;41H[?25h{[95m'[?25l{}'[m)[95m[46m{}[m[24;67H8[16;42H[?25h[?25l[24;67H9[16;43H[?25h[?25l[16;18H[46m([m[22C[95m{}[m[1C[46m)[m[24;66H41[16;45H[?25h[?25l.[16;18H([25C)[24;67H2[16;46H[?25h[?25lf[24;67H3[16;47H[?25h[?25lo[24;67H4[16;48H[?25h[?25l[93mfor[m[24;67H5[16;49H[?25h[?25lform[24;67H6[16;50H[?25h[?25la[24;67H7[16;51H[?25h[?25lt[24;67H8[16;52H[?25h[?25l()[46m()[m[24;67H9[16;53H[?25h[?25l[46ms[m)s[46m)[m[24;66H50[16;54H[?25h[?25l[46me[m)e[46m)[m[24;67H1[16;55H[?25h[?25l[46ml[m)l[46m)[m[24;67H2[16;56H[?25h[?25l[46mf[m)f[46m)[m[24;67H3[16;57H[?25h[?25l[46m.[m).[46m)[m[24;67H4[16;58H[?25h[?25l[46mo[m)o[46m)[m[24;67H5[16;59H[?25h[?25l[46mp[m)p[46m)[m[24;67H6[16;60H[?25h[?25l[46mt[m)t[46m)[m[24;67H7[16;61H[?25h[?25l[46mi[m)i[46m)[m[24;67H8[16;62H[?25h[?25l[46mo[m)o[46m)[m[24;67H9[16;63H[?25h[?25l[46mn[m)n[46m)[m[24;66H60[16;64H[?25h[?25l[46ms[m)s[46m)[m[24;67H1[16;65H[?25h[?25l[46m.[m).[46m)[m[24;67H2[16;66H[?25h[?25l[46mm[m)m[46m)[m[24;67H3[16;67H[?25h[?25l[46my[m)y[46m)[m[24;67H4[16;68H[?25h[?25l[46mP[m)P[46m)[m[24;67H5[16;69H[?25h[?25l)[16;69H[K[16;68H[46m)[m[24;67H4[16;68H[?25h[?25l[46m_[m)_[46m)[m[24;67H5[16;69H[?25h[?25l[46mp[m)p[46m)[m[24;67H6[16;70H[?25h[?25l[46mr[m)r[46m)[m[24;67H7[16;71H[?25h[?25l[46mo[m)o[46m)[m[24;67H8[16;72H[?25h[?25l[46mp[m)p[46m)[m[24;67H9[16;73H[?25h[?25l[46me[m)e[46m)[m[24;66H70[16;74H[?25h[?25l[46mr[m)r[46m)[m[24;67H1[16;75H[?25h[?25l[46mt[m)t[46m)[m[24;67H2[16;76H[?25h[?25l[46my[m)y[46m)[m[24;67H3[16;77H[?25h[?25l[16;52H([24C)[24;67H2[16;76H[?25h[?25l[24;67H1[16;75H[?25h[?25l[24;67H0[16;74H[?25h[?25l[24;66H69[16;73H[?25h[?25l[24;67H8[16;72H[?25h[?25l[24;67H7[16;71H[?25h[?25l[24;67H6[16;70H[?25h[?25l[24;67H5[16;69H[?25h[?25l[24;67H4[16;68H[?25h[?25l[24;67H3[16;67H[?25h[?25l[24;67H2[16;66H[?25h[?25l[24;67H1[16;65H[?25h[?25l[24;67H0[16;64H[?25h[?25l[24;66H59[16;63H[?25h[?25l[24;67H8[16;62H[?25h[?25l[24;67H7[16;61H[?25h[?25l[24;67H6[16;60H[?25h[?25l[24;67H5[16;59H[?25h[?25l[24;67H4[16;58H[?25h[?25l[24;67H3[16;57H[?25h[?25l[24;67H2[16;56H[?25h[?25l[24;67H1[16;55H[?25h[?25l[24;67H0[16;54H[?25h[?25l[46m([24C)[m[24;66H49[16;53H[?25h[?25l[24;67H8[16;52H[?25h[?25l([24C)[24;67H7[16;51H[?25h[?25l[24;67H6[16;50H[?25h[?25l[24;67H5[16;49H[?25h[?25l[24;67H4[16;48H[?25h[?25l[24;67H3[16;47H[?25h[?25l[24;67H2[16;46H[?25h[?25l[16;18H[46m([25C)[m[24;67H1[16;45H[?25h[?25l[46m.[mformat(self.options.my_property)[16;77H[K[16;18H([25C.[24;67H0[16;44H[?25h[?25l[7C[46m([24C)[m[24;66H73[16;77H[?25h[?25l)[16;18H[46m([m[32C([24C)[46m)[m[24;67H4[16;78H[?25h[?25l
+[93m 17 [m[97m[101m        [m[17;13H[K[16;18H([58C)[24;64H7,9 [17;13H[?25h[?25l[17;9H[K[24;66H5[17;9H[?25h[?25l    f[24;66H6[17;10H[?25h[?25lr[24;66H7[17;11H[?25h[?25l[17;10H[K[24;66H6[17;10H[?25h[?25l[97m[101m    [m[17;9H[K[24;66H5[17;9H[?25h[?25l    d[24;66H6[17;10H[?25h[?25le[24;66H7[17;11H[?25h[?25l[93mdef[m[24;66H8[17;12H[?25h[?25l[24;66H9[17;13H[?25h[?25l[24;66H10[17;14H[?25h[?25l[24;66H9 [17;13H[?25h[?25l[1m[96mb[m[24;66H10[17;14H[?25h[?25l[1m[96mu[m[24;67H1[17;15H[?25h[?25l[1m[96mi[m[24;67H2[17;16H[?25h[?25l[1m[96ml[m[24;67H3[17;17H[?25h[?25l[1m[96md[m[24;67H4[17;18H[?25h[?25l()[46m()[m[24;67H5[17;19H[?25h[?25l[46ms[m)s[46m)[m[24;67H6[17;20H[?25h[?25l[46me[m)e[46m)[m[24;67H7[17;21H[?25h[?25l[46ml[m)l[46m)[m[24;67H8[17;22H[?25h[?25l[46mf[m)f[46m)[m[24;67H9[17;23H[?25h[?25l[1C)[17;18H(self)[24;66H20[17;24H[?25h[?25l[17;24H[K[17;18H[46m([mself[46m)[?25h[?25l[m:[17;18H(self)[24;67H1[17;25H[?25h[?25l
+[93m 18 [m[97m[101m        [m[18;13H[K[24;64H8,9 [18;13H[?25h[?25l[18;5H[K[24;64H7[17;13H[?25h[?25l[24;64H8,1[18;5H[?25h[?25ls[24;66H2[18;6H[?25h[?25l[18;5H[K[24;66H1[18;5H[?25h[?25l[94m~                                                                               [m[24;64H7,21[17;25H[?25h[?25l[24;66H1 [17;5H[?25h[?25l[17;9H[K[18;1H[93m 18 [m[93mdef[m [1m[96mbuild[m(self):[18;21H[K[24;64H8[18;5H[?25h[?25l[17;5H[93mdef[m [1m[96mbuild[m(self):
+[94m~                                                                               [m[24;64H7[17;5H[?25h[?25l[17;5H[K[18;1H[93m 18 [m[93mdef[m [1m[96mbuild[m(self):[18;21H[K[24;64H8[18;5H[?25h[?25l    [93mdef[m [1m[96mbuild[m(self):[24;66H5[18;9H[?25h[?25l[24;66H21[18;25H[?25h[?25l
+[93m 19 [m[97m[101m        [m[19;13H[K[24;64H9,9 [19;13H[?25h[?25l[19;5H        s[24;66H10[19;14H[?25h[?25lu[24;67H1[19;15H[?25h[?25lp[24;67H2[19;16H[?25h[?25le[24;67H3[19;17H[?25h[?25l[1m[96msuper[m[24;67H4[19;18H[?25h[?25l.[24;67H5[19;19H[?25h[?25l[19;18H[K[24;67H4[19;18H[?25h[?25l()[46m()[m[24;67H5[19;19H[?25h[?25l[24;67H6[19;20H[?25h[?25l.()[24;67H7[19;21H[?25h[?25lb[24;67H8[19;22H[?25h[?25li[24;67H9[19;23H[?25h[?25l[19;22H[K[24;67H8[19;22H[?25h[?25lu[24;67H9[19;23H[?25h[?25li[24;66H20[19;24H[?25h[?25ll[24;67H1[19;25H[?25h[?25ld[24;67H2[19;26H[?25h[?25l()[46m()[m[24;67H3[19;27H[?25h[?25l[46ma[m)a[46m)[m[24;67H4[19;28H[?25h[?25l)[19;28H[K[19;27H[46m)[m[24;67H3[19;27H[?25h[?25l[24;67H4[19;28H[?25h[?25l
+[93m 20 [m[97m[101m        [m[20;13H[K[19;26H()[24;63H20,9 [20;13H[?25h[?25l[20;5H        p[24;66H10[20;14H[?25h[?25lr[24;67H1[20;15H[?25h[?25li[24;67H2[20;16H[?25h[?25ln[24;67H3[20;17H[?25h[?25l[1m[96mprint[m[24;67H4[20;18H[?25h[?25l()[46m()[m[24;67H5[20;19H[?25h[?25l[95m[46m'[m[95m'[m)([95m'[m[24;67H6[20;20H[?25h[?25l[95mw'[m)[24;67H7[20;21H[?25h[?25l[95me'[m)[24;67H8[20;22H[?25h[?25l[95m '[m)[24;67H9[20;23H[?25h[?25l[95mh'[m)[24;66H20[20;24H[?25h[?25l[95ma'[m)[24;67H1[20;25H[?25h[?25l[95mv'[m)[24;67H2[20;26H[?25h[?25l[95me'[m)[24;67H3[20;27H[?25h[?25l[95m '[m)[24;67H4[20;28H[?25h[?25l[95mb'[m)[24;67H5[20;29H[?25h[?25l[95mu'[m)[24;67H6[20;30H[?25h[?25l[95m'[m)[20;31H[K[24;67H5[20;29H[?25h[?25l[95m'[m)[20;30H[K[24;67H4[20;28H[?25h[?25l[95m'[m)[20;29H[K[24;67H3[20;27H[?25h[?25l[95m'[m)[20;28H[K[24;67H2[20;26H[?25h[?25l[95m'[m)[20;27H[K[24;67H1[20;25H[?25h[?25l[95m'[m)[20;26H[K[24;67H0[20;24H[?25h[?25l[95m'[m)[20;25H[K[24;66H19[20;23H[?25h[?25l[95md'[m)[24;66H20[20;24H[?25h[?25l[95mo'[m)[24;67H1[20;25H[?25h[?25l[95mn'[m)[24;67H2[20;26H[?25h[?25l[95me'[m)[24;67H3[20;27H[?25h[?25l[20;18H[46m([9C)[m[24;67H5[20;29H[?25h[?25l[19;26H[46m()[m[20;18H([9C)[24;63H19,24[19;28H[?25h[?25l()[24;64H8,21[18;25H[?25h[?25l[24;64H7,1 [17;5H[?25h[?25l[16;18H[46m([58C)[m[24;64H6,74[16;78H[?25h[?25l[16;18H([58C)[24;64H7,1 [17;5H[?25h[?25l[24;64H8,21[18;25H[?25h[?25l[19;26H[46m()[m[24;64H9,24[19;28H[?25h[?25l()[20;18H[46m([9C)[m[24;63H20,25[20;29H[?25h[?25l[19;26H[46m()[m[20;18H([9C)[24;63H19,24[19;28H[?25h[?25l()[24;64H8,21[18;25H[?25h[?25l[24;64H7,1 [17;5H[?25h[?25l[16;18H[46m([58C)[m[24;64H6,74[16;78H[?25h[?25l[24;67H3[16;77H[?25h[?25l[16;18H([32C[46m([24C)[m)[24;67H2[16;76H[?25h[?25l[16;51H([24C)[24;67H1[16;75H[?25h[?25l[24;67H0[16;74H[?25h[?25l[24;66H69[16;73H[?25h[?25l[24;67H8[16;72H[?25h[?25l[24;67H7[16;71H[?25h[?25l[24;67H6[16;70H[?25h[?25l[24;67H5[16;69H[?25h[?25l[24;67H4[16;68H[?25h[?25l[24;67H3[16;67H[?25h[?25l[24;67H2[16;66H[?25h[?25l[24;67H1[16;65H[?25h[?25l[24;67H0[16;64H[?25h[?25l[24;66H59[16;63H[?25h[?25l[24;67H8[16;62H[?25h[?25l[24;67H7[16;61H[?25h[?25l[24;67H6[16;60H[?25h[?25l[24;67H5[16;59H[?25h[?25l[24;67H4[16;58H[?25h[?25l[24;67H3[16;57H[?25h[?25l[24;67H2[16;56H[?25h[?25l[24;67H1[16;55H[?25h[?25l[24;67H0[16;54H[?25h[?25l[24;66H49[16;53H[?25h[?25l[46m([24C)[m[24;67H8[16;52H[?25h[?25l[24;67H7[16;51H[?25h[?25l([24C)[24;67H6[16;50H[?25h[?25l[24;67H5[16;49H[?25h[?25l[24;67H4[16;48H[?25h[?25l[24;67H3[16;47H[?25h[?25l[24;67H2[16;46H[?25h[?25l[24;67H1[16;45H[?25h[?25l[24;67H0[16;44H[?25h[?25l[95m[46m{}[m[24;66H39[16;43H[?25h[?25l[24;67H8[16;42H[?25h[?25l[24;67H7[16;41H[?25h[?25l[95m{}[m[24;67H6[16;40H[?25h[?25l[24;67H5[16;39H[?25h[?25l[24;67H4[16;38H[?25h[?25l[24;67H3[16;37H[?25h[?25l[24;67H2[16;36H[?25h[?25l[24;67H1[16;35H[?25h[?25l[24;67H0[16;34H[?25h[?25l[24;66H29[16;33H[?25h[?25l[24;67H8[16;32H[?25h[?25l[24;67H7[16;31H[?25h[?25l[24;67H6[16;30H[?25h[?25l[24;67H5[16;29H[?25h[?25l[24;67H4[16;28H[?25h[?25l[95m'' pulled - by {}'[m.format(self.options.my_property))[24;67H5[16;29H[?25h[?25ld[95m' pulled - by {}'[m.format(self.options.my_property))[24;67H6[16;30H[?25h[?25l[24;67H5[16;29H[?25h[?25l[24;67H4[16;28H[?25h[?25l[24;67H3[16;27H[?25h[?25l[24;67H2[16;26H[?25h[?25l[24;67H1[16;25H[?25h[?25l[24;67H0[16;24H[?25h[?25l[24;66H19[16;23H[?25h[?25l[24;67H8[16;22H[?25h[?25l[95me have'[md[95m' pulled - by {}'[m.format(self.options.my_property)[16;80H[K[24;67H7[16;21H[?25h[?25l[24;67H8[16;22H[?25h[?25l[24;67H9[16;23H[?25h[?25l[24;66H20[16;24H[?25h[?25l[24;67H1[16;25H[?25h[?25l[24;67H2[16;26H[?25h[?25l[24;67H3[16;27H[?25h[?25l[24;67H4[16;28H[?25h[?25l[24;67H5[16;29H[?25h[?25l[24;67H6[16;30H[?25h[?25l pulled - by {}[95m'.format(self.options.my_property))[m[16;79H[K[18;5H[95m    def build(self):[19;5H        super().build()[20;5H        print([m[1Cwe done[1C[95m)[m[24;67H5[16;29H[?25h[?25l[24;67H6[16;30H[?25h[?25l[24;67H5[16;29H[?25h[?25l[24;67H4[16;28H[?25h[?25l[95md pulled - by {}'[m.format(self.options.my_property))[16;78H[K[18;5H    [93mdef[m [1m[96mbuild[m(self):[19;5H        [1m[96msuper[m().build()[20;5H        [1m[96mprint[m([1C[95mwe done[m[1C)[24;67H3[16;27H[?25h[?25l[95m""d pulled - by {}'[m.format(self.options.my_property))[24;67H4[16;28H[?25h[?25l[24;67H5[16;29H[?25h[?25l[95md pulled - by {}'[m.format(self.options.my_property)[16;79H[K[24;67H4[16;28H[?25h[?25l[95md pulled - by {}'[m.format(self.options.my_property)[16;78H[K[24;67H3[16;27H[?25h[?25l[95m pulled - by {}'[m.format(self.options.my_property)[16;77H[K[16;27H[?25h[?25l[24;64H7,1 [17;5H[?25h[?25l[24;64H8,21[18;25H[?25h[?25l[19;26H[46m()[m[24;64H9,23[19;27H[?25h[?25l()[24;63H20[20;27H[?25h[24;1H[K[20;26H[?25l[24;63H20,22[9CAll[20;26H[?25h[?25l[24;63H[K[24;1H:[?2004h[?25h[?25l[?25hw[?25l[?25hq[?25l[?25h[?25l[?2004l"snap/plugins/my_plugin.py" 20L, 475C written[23;2t[23;1t[22;2t[22;1t[23;2t[23;1t
+[?2004l[?1l>[?25h[?1049l[23;0;0t[1m[7m%[27m[1m[0m                                                                                ]2;dev@ls: ~/Documents/httpstat]1;..ents/httpstat[0m[27m[24m[J(base) [01;32m➜  [36mhttpstat[00m [K[?1h=[?2004hvim snap/plugins/my_plugin.py[90my[39m[90mp[90m.[90mn[90mi[90mg[90mu[90ml[90mp[90m_[90my[90mm[90m/[90ms[90mn[90mi[90mg[90mu[90ml[90mp[39m[39ms[39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [19Dm napcraft.yaml[1m [0m[0m [?1l>[?2004l
+]2;vim snap/snapcraft.yaml]1;vim[?2004h[?1049h[22;0;0t[?1h=[?2004h[1;24r[?12h[?12l[22;2t[22;1t[27m[23m[29m[m[H[2J[?25l[24;1H[97m[41mE325: ATTENTION[m
+Found a swap file by the name "snap/.snapcraft.yaml.swp"
+[10Cowned by: dev   dated: Fri Jul  5 15:58:59 2019
+[9Cfile name: /home/dev/Documents/httpstat/snap/snapcraft.yaml
+[10Cmodified: YES
+[9Cuser name: dev   host name: ls
+[8Cprocess ID: 19594 (still running)
+[9C[not usable on this computer]
+While opening file "snap/snapcraft.yaml"
+[13Cdated: Fri Jul  5 15:50:03 2019
+
+(1) Another program may be editing the same file.  If this is the case,
+    be careful not to end up with two different instances of the same
+    file when making changes.  Quit, or continue with caution.
+(2) An edit session for this file crashed.
+    If this is the case, use ":recover" or "vim -r snap/snapcraft.yaml"
+    to recover the changes (see ":help recovery").
+    If you did this already, delete the swap file "snap/.snapcraft.yaml.swp"
+    to avoid this message.
+
+[32mSwap file "snap/.snapcraft.yaml.swp" already exists![m
+[32m[O]pen Read-Only, (E)dit anyway, (R)ecover, (Q)uit, (A)bort: [?25h[m[24;1H[K[?25l[24;1H"snap/snapcraft.yaml" 19L, 258C[2;1H▽[6n[2;1H  [1;1H[>c]10;?]11;?[1;1H[38;5;130m  1 [m[36mname[m[35m:[m jajalapp
+[38;5;130m  2 [m[36mversion[m[35m:[m [31m'1.1.3'[m
+[38;5;130m  3 [m[36msummary[m[35m:[m jajal
+[38;5;130m  4 [m[36mdescription[m[35m:[m |[4;19H[K[5;1H[38;5;130m  5 [m[36mgrade[m[35m:[m stable[5;18H[K[6;1H[38;5;130m  6 [m[36mconfinement[m[35m:[m strict[6;24H[K[7;1H[38;5;130m  7 [m[36mbase[m[35m:[m core18[7;17H[K[8;1H[38;5;130m  8 [m[8;10H[K[9;1H[38;5;130m  9 [m[36mapps[m[35m:[m [9;11H[K[10;1H[38;5;130m 10 [m  [36mhttpstat[m[35m:[m[10;16H[K[11;1H[38;5;130m 11 [m    [36mcommand[m[35m:[m echo jajal[11;28H[K[12;1H[38;5;130m 12 [m[12;14H[K[13;1H[38;5;130m 13 [m[36mparts[m[35m:[m
+[38;5;130m 14 [m  [36mhttpstat[m[35m:[m[14;16H[K[15;1H[38;5;130m 15 [m    [36mplugin[m[35m:[m dump[15;21H[K[16;1H[38;5;130m 16 [m    [36mbuild-packages[m[35m:[m[16;24H[K[17;1H[38;5;130m 17 [m      [38;5;130m- [mwget[17;17H[K[18;1H[38;5;130m 18 [m[34m#    stage-packages:[m[18;26H[K[19;1H[38;5;130m 19 [m[34m#      - wget[m[19;18H[K[20;1H[94m~                                                                               [21;1H~                                                                               [22;1H~                                                                               [23;1H~                                                                               [m[24;63H1,1[11CAll[1;5H[?25hP+q436f\P+q6b75\P+q6b64\P+q6b72\P+q6b6c\P+q2332\P+q2334\P+q2569\P+q2a37\P+q6b31\[27m[23m[29m[m[H[2J[?25l[1;1H[93m  1 [m[1m[96mname[m[38;5;224m:[m jajalapp
+[93m  2 [m[1m[96mversion[m[38;5;224m:[m [95m'1.1.3'[m
+[93m  3 [m[1m[96msummary[m[38;5;224m:[m jajal
+[93m  4 [m[1m[96mdescription[m[38;5;224m:[m |
+[93m  5 [m[1m[96mgrade[m[38;5;224m:[m stable
+[93m  6 [m[1m[96mconfinement[m[38;5;224m:[m strict
+[93m  7 [m[1m[96mbase[m[38;5;224m:[m core18
+[93m  8 
+  9 [m[1m[96mapps[m[38;5;224m:[m
+[93m 10 [m  [1m[96mhttpstat[m[38;5;224m:[m
+[93m 11 [m    [1m[96mcommand[m[38;5;224m:[m echo jajal
+[93m 12 
+ 13 [m[1m[96mparts[m[38;5;224m:[m
+[93m 14 [m  [1m[96mhttpstat[m[38;5;224m:[m
+[93m 15 [m    [1m[96mplugin[m[38;5;224m:[m dump
+[93m 16 [m    [1m[96mbuild-packages[m[38;5;224m:[m
+[93m 17 [m      [93m- [mwget
+[93m 18 [m[96m#    stage-packages:[m
+[93m 19 [m[96m#      - wget[m
+[94m~                                                                               [21;1H~                                                                               [22;1H~                                                                               [23;1H~                                                                               [m[24;63H1,1[11CAll"snap/snapcraft.yaml" 19L, 258C[1;5H[?25h[?25l[24;1H[38;5;224mThe ycmd server SHUT DOWN (re... a Python 2 interpreter path.[m[24;63H[K[24;63H1,1[11CAll[1;5H[?25h[?25l[24;63H2[2;5H[?25h[?25l[24;63H3[3;5H[?25h[?25l[24;63H4[4;5H[?25h[?25l[24;63H5[5;5H[?25h[?25l[24;63H6[6;5H[?25h[?25l[24;63H7[7;5H[?25h[?25l[24;63H8,0-1[8;5H[?25h[?25l[24;63H9,1  [9;5H[?25h[?25l[24;63H10,1[10;5H[?25h[?25l[24;64H1[11;5H[?25h[?25l[24;64H2,0-1[12;5H[?25h[?25l[24;64H3,1  [13;5H[?25h[?25l[24;64H4[14;5H[?25h[?25l[24;64H5[15;5H[?25h[?25l[24;64H6[16;5H[?25h[?25l[24;64H7[17;5H[?25h[?25l[24;64H8[18;5H[?25h[?25l[24;64H9[19;5H[?25h[?25l[24;1H[1m-- INSERT --[m[24;13H[K[24;63H19,2[10CAll[19;6H[?25h[?25l[24;64H8[18;6H[?25h[?25l[24;64H7[17;6H[?25h[?25l[24;64H6[16;6H[?25h[?25l[24;64H5[15;6H[?25h[?25l[24;64H4[14;6H[?25h[?25l[24;66H1[14;5H[?25h[?25l       [96m #  httpstat:[m[24;67H0[14;14H[?25h[?25l   [1m[96mhttpstat[m[38;5;224m:[m[14;24H[K[24;63H[K[24;63H14,9[10CAll[14;13H[?25h[?25l [1m[96mhttpstat[m[38;5;224m:[m[14;23H[K[24;66H8[14;12H[?25h[?25l [1m[96mhttpstat[m[38;5;224m:[m[14;22H[K[24;66H7[14;11H[?25h[?25l [1m[96mhttpstat[m[38;5;224m:[m[14;21H[K[24;63H[K[24;63H14,6[10CAll[14;10H[?25h[?25l [1m[96mhttpstat[m[38;5;224m:[m[14;20H[K[24;66H5[14;9H[?25h[?25l [1m[96mhttpstat[m[38;5;224m:[m[14;19H[K[24;66H4[14;8H[?25h[?25l [1m[96mhttpstat[m[38;5;224m:[m[14;18H[K[24;66H3[14;7H[?25h[?25l [1m[96mhttpstat[m[38;5;224m:[m[14;17H[K[24;66H2[14;6H[?25h[?25l [1m[96mhttpstat[m[38;5;224m:[m[14;16H[K[24;66H1[14;5H[?25h[?25l[13;13Hhttpstat:[14;7H  [1m[96mplugin[m[38;5;224m:[m dump[15;9H[1m[96mbuild-packages[m[38;5;224m:[m[16;9H  [93m- [mwget[16;17H[K[17;5H[96m#    stage-packages:[18;10H  - wget[m[18;18H[K[19;1H[94m~                                                                               [m[24;64H3,7[13;11H[?25h[?25l httpstat:[13;21H[K[13;11H[?25h[?25l[1m[96m:httpstat[m[38;5;224m:[m[13;20H[K[13;11H[?25h[?25l[38;5;224m:[m[13;11H[K[14;9H    [1m[96mhttpstat[m[38;5;224m:[m[15;9H[1m[96mplugin[m[38;5;224m:[m dump[15;21H[K[16;9H[1m[96mbuild-packages[m[38;5;224m:[m[17;5H      [93m- [mwget[17;17H[K[18;10H[96mstage-packages:[m
+[93m 19 [m[96m#      - wget[m[19;18H[K[24;63H[K[24;63H14,9[10CAll[14;13H[?25h[?25l[24;64H5[15;13H[?25h[?25l[24;66H1[15;5H[?25h[?25l   [1m[96mplugin[m[38;5;224m:[m dump[15;20H[K[15;5H[?25h[?25l  [1m[96mplugin[m[38;5;224m:[m dump[15;19H[K[15;5H[?25h[?25l [1m[96mplugin[m[38;5;224m:[m dump[15;18H[K[15;5H[?25h[?25l[1m[96mplugin[m[38;5;224m:[m dump[15;17H[K[15;5H[?25h[?25l[14;21H[1m[96m:plugin[m[38;5;224m:[m dump[15;5H    [1m[96mbuild-packages[m[38;5;224m:[m[16;9H  [93m- [mwget[16;17H[K[17;5H[96m#    stage-packages:[18;10H  - wget[m[18;18H[K[19;1H[94m~                                                                               [m[24;64H4,18[14;22H[?25h[?25l[38;5;224m:[m[14;22H[K[15;9H            [1m[96mplugin[m[38;5;224m:[m dump[16;9H[1m[96mbuild-packages[m[38;5;224m:[m[17;5H      [93m- [mwget[17;17H[K[18;10H[96mstage-packages:[m
+[93m 19 [m[96m#      - wget[m[19;18H[K[24;63H[K[24;63H15,17[9CAll[15;21H[?25h[?25l[1m[96mplugin[m[38;5;224m:[m dump[15;32H[K[24;63H[K[24;63H15,16[9CAll[15;20H[?25h[?25l[1m[96mplugin[m[38;5;224m:[m dump[15;31H[K[24;67H5[15;19H[?25h[?25l[1m[96mplugin[m[38;5;224m:[m dump[15;30H[K[24;67H4[15;18H[?25h[?25l[1m[96mplugin[m[38;5;224m:[m dump[15;29H[K[24;67H3[15;17H[?25h[?25l[1m[96mplugin[m[38;5;224m:[m dump[15;28H[K[24;67H2[15;16H[?25h[?25l[1m[96mplugin[m[38;5;224m:[m dump[15;27H[K[24;67H1[15;15H[?25h[?25l[1m[96mplugin[m[38;5;224m:[m dump[15;26H[K[24;67H0[15;14H[?25h[?25l[1m[96mplugin[m[38;5;224m:[m dump[15;25H[K[24;66H9 [15;13H[?25h[?25l[24;64H6[16;13H[?25h[?25l[24;66H1[16;5H[?25h[?25l   [1m[96mbuild-packages[m[38;5;224m:[m[16;23H[K[16;5H[?25h[?25l  [1m[96mbuild-packages[m[38;5;224m:[m[16;22H[K[16;5H[?25h[?25l [1m[96mbuild-packages[m[38;5;224m:[m[16;21H[K[16;5H[?25h[?25l[1m[96mbuild-packages[m[38;5;224m:[m[16;20H[K[16;5H[?25h[?25l[15;25Hbuild-packages:[16;5H      [93m- [mwget[16;17H[K[17;5H[96m#    stage-packages:[18;10H  - wget[m[18;18H[K[19;1H[94m~                                                                               [m[24;64H5,21[15;25H[?25h[?25l[15;25H[K[16;11H  [1m[96mbuild-packages[m[38;5;224m:[m[17;5H      [93m- [mwget[17;17H[K[18;10H[96mstage-packages:[m
+[93m 19 [m[96m#      - wget[m[19;18H[K[24;63H[K[24;63H16,9[10CAll[16;13H[?25h[?25l[24;64H7[17;13H[?25h[?25l[24;66H1[17;5H[?25h[?25l     [93m- [mwget[17;16H[K[17;5H[?25h[?25l    [93m- [mwget[17;15H[K[17;5H[?25h[?25l   [93m- [mwget[17;14H[K[17;5H[?25h[?25l  [93m- [mwget[17;13H[K[17;5H[?25h[?25l [93m- [mwget[17;12H[K[17;5H[?25h[?25l[93m- [mwget[17;11H[K[17;5H[?25h[?25l[16;13Hbuild-packages:- wget[17;5H[96m#    stage-packages:[18;10H  - wget[m[18;18H[K[19;1H[94m~                                                                               [m[24;64H6,24[16;28H[?25h[?25l[16;13H[1m[96mbuild-packages[m[38;5;224m:[m[16;28H[K[17;5H                [93m- [mwget[18;10H[96mstage-packages:[m
+[93m 19 [m[96m#      - wget[m[19;18H[K[24;63H[K[24;63H17,17[9CAll[17;21H[?25h[?25l[24;64H8[18;21H[?25h[?25l[24;67H [18;5H[?25h[?25l[17;23H[1m[96mwget#    stage-packages[m[38;5;224m:[m[18;10H[96m  - wget[m[18;18H[K[19;1H[94m~                                                                               [m[24;64H7,23[17;27H[?25h[?25l[1m[96m    stage-packages[m[38;5;224m:[m[17;46H[K[17;27H[?25h[?25l[3C[1m[96mstage-packages[m[38;5;224m:[m[17;45H[K[17;27H[?25h[?25l[2C[1m[96mstage-packages[m[38;5;224m:[m[17;44H[K[17;27H[?25h[?25l[1C[1m[96mstage-packages[m[38;5;224m:[m[17;43H[K[17;27H[?25h[?25l[1m[96mstage-packages[m[38;5;224m:[m[17;42H[K[17;27H[?25h[?25lwget[17;27H[K[18;5H        [1m[96mstage-packages[m[38;5;224m:[m
+[93m 19 [m[96m#      - wget[m[19;18H[K[24;63H[K[24;63H18,9[10CAll[18;13H[?25h[?25l[24;64H9[19;13H[?25h[?25l[24;66H1[19;5H[?25h[?25l      [93m- [mwget[19;17H[K[19;5H[?25h[?25l     [93m- [mwget[19;16H[K[19;5H[?25h[?25l    [93m- [mwget[19;15H[K[19;5H[?25h[?25l   [93m- [mwget[19;14H[K[19;5H[?25h[?25l  [93m- [mwget[19;13H[K[19;5H[?25h[?25l [93m- [mwget[19;12H[K[19;5H[?25h[?25l[93m- [mwget[19;11H[K[19;5H[?25h[?25l[18;13Hstage-packages:- wget
+[94m~                                                                               [m[24;64H8,24[18;28H[?25h[?25l[18;13H[1m[96mstage-packages[m[38;5;224m:[m[18;28H[K[19;1H[93m 19 [m                [93m- [mwget[19;27H[K[24;63H[K[24;63H19,17[9CAll[19;21H[?25h[?25l[24;64H8[18;21H[?25h[?25l[24;67H [18;5H[?25h[?25l[8C         [96m #        stage-packages:[m[24;63H[K[24;63H18,20[9CAll[18;24H[?25h[?25l[24;64H9[19;24H[?25h[?25l[24;66H1 [19;5H[?25h[?25l[16C [96m #                - wget[m[24;63H[K[24;63H19,20[9CAll[19;24H[?25h[?25l                 [93m- [mwget[19;45H[K[24;63H[K[24;63H19,19[9CAll[19;23H[?25h[?25l[15C[93m- [mwget[19;44H[K[24;67H8[19;22H[?25h[?25l[15C[93m- [mwget[19;43H[K[24;67H7[19;21H[?25h[?25l[15C[93m- [mwget[19;42H[K[24;63H[K[24;63H19,16[9CAll[19;20H[?25h[?25l[15C[93m- [mwget[19;41H[K[24;67H5[19;19H[?25h[?25l[15C[93m- [mwget[19;40H[K[24;67H4[19;18H[?25h[?25l[15C[93m- [mwget[19;39H[K[24;67H3[19;17H[?25h[?25l[15C[93m- [mwget[19;38H[K[24;67H2[19;16H[?25h[?25l[15C[93m- [mwget[19;37H[K[24;67H1[19;15H[?25h[?25l[15C[93m- [mwget[19;36H[K[24;67H0[19;14H[?25h[?25l[15C[93m- [mwget[19;35H[K[24;66H9 [19;13H[?25h[?25l[15C[93m- [mwget[19;34H[K[24;63H[K[24;63H19,8[10CAll[19;12H[?25h[?25l[15C[93m- [mwget[19;33H[K[24;66H7[19;11H[?25h[?25l[15C[93m- [mwget[19;32H[K[24;66H6[19;10H[?25h[?25l[15C[93m- [mwget[19;31H[K[24;66H5[19;9H[?25h[?25l[15C[93m- [mwget[19;30H[K[24;66H4[19;8H[?25h[?25l[15C[93m- [mwget[19;29H[K[24;66H3[19;7H[?25h[?25l[15C[93m- [mwget[19;28H[K[24;66H2[19;6H[?25h[?25l[15C[93m- [mwget[19;27H[K[24;66H1[19;5H[?25h[?25l[24;64H8[18;5H[?25h[?25l[16C[96m # [7Cstage-packages:[m[18;46H[K[18;5H[?25h[?25l[15C[96m # [7Cstage-packages:[m[18;45H[K[18;5H[?25h[?25l[14C[96m # [7Cstage-packages:[m[18;44H[K[18;5H[?25h[?25l[13C[96m # [7Cstage-packages:[m[18;43H[K[18;5H[?25h[?25l[12C[96m # [7Cstage-packages:[m[18;42H[K[18;5H[?25h[?25l[11C[96m # [7Cstage-packages:[m[18;41H[K[18;5H[?25h[?25l[10C[96m # [7Cstage-packages:[m[18;40H[K[18;5H[?25h[?25l[9C[96m # [7Cstage-packages:[m[18;39H[K[18;5H[?25h[?25l[8C[96m # [7Cstage-packages:[m[18;38H[K[18;5H[?25h[?25l[7C[96m # [7Cstage-packages:[m[18;37H[K[18;5H[?25h[?25l      [96m # [7Cstage-packages:[m[18;36H[K[18;5H[?25h[?25l     [96m # [7Cstage-packages:[m[18;35H[K[18;5H[?25h[?25l    [96m # [7Cstage-packages:[m[18;34H[K[18;5H[?25h[?25l   [96m # [7Cstage-packages:[m[18;33H[K[18;5H[?25h[?25l  [96m # [7Cstage-packages:[m[18;32H[K[18;5H[?25h[?25l [96m # [7Cstage-packages:[m[18;31H[K[18;5H[?25h[?25l[96m # [7Cstage-packages:[m[18;30H[K[18;5H[?25h[?25l[96m# [7Cstage-packages:[m[18;29H[K[18;5H[?25h[?25l        [1m[96mstage-packages[m[38;5;224m:[m[18;28H[K[24;63H[K[24;63H18,1[10CAll[18;5H[?25h[?25l[24;64H7[17;5H[?25h[?25l[24;64H6[16;5H[?25h[?25l[24;64H5[15;5H[?25h[?25l[24;64H4[14;5H[?25h[?25l[24;64H3[13;5H[?25h[?25l[24;64H2[12;5H[?25h[?25l[24;64H1[11;5H[?25h[?25l[24;64H0[10;5H[?25h[?25l[9;13Hhttpstat:[10;7H  [1m[96mcommand[m[38;5;224m:[m echo jajal[11;9H[K[12;5H[1m[96mparts[m[38;5;224m:[m[13;5H        [1m[96mhttpstat[m[38;5;224m:[m[14;13H[1m[96mplugin[m[38;5;224m:[m dump[15;13H[1m[96mbuild-packages[m[38;5;224m:[m[16;13H        [93m- [mwget[16;27H[K[17;13H[1m[96mstage-packages[m[38;5;224m:[m[18;13H        [93m- [mwget[18;27H[K[19;1H[94m~                                                                               [m[24;63H9,7 [9;11H[?25h[?25l httpstat:[9;21H[K[9;11H[?25h[?25lhttpstat:[9;20H[K[9;11H[?25h[?25l[1m[96m:httpstat[m[38;5;224m:[m[9;19H[K[24;65H6[9;10H[?25h[?25l[38;5;224m:[m[9;10H[K[10;9H    [1m[96mhttpstat[m[38;5;224m:[m[10;23H[K[11;9H[1m[96mcommand[m[38;5;224m:[m echo jajal[12;5H[K[13;5H[1m[96mparts[m[38;5;224m:[m[13;13H[K[14;13H[1m[96mhttpstat[m[38;5;224m:[m[14;22H[K[15;13H[1m[96mplugin[m[38;5;224m:[m dump[15;25H[K[16;13H[1m[96mbuild-packages[m[38;5;224m:[m[17;13H        [93m- [mwget[17;27H[K[18;13H[1m[96mstage-packages[m[38;5;224m:[m
+[93m 19 [m                [93m- [mwget[19;27H[K[24;63H[K[24;63H10,9[10CAll[10;13H[?25h[?25l[1m[96m\httpstat[m[38;5;224m:[m[24;66H10[10;14H[?25h[?25l[1m[96mhttpstat[m[38;5;224m:[m[10;22H[K[24;66H9 [10;13H[?25h[?25l[24;64H1[11;13H[?25h[?25l[24;66H1[11;5H[?25h[?25l   [1m[96mcommand[m[38;5;224m:[m echo jajal[11;27H[K[11;5H[?25h[?25l  [1m[96mcommand[m[38;5;224m:[m echo jajal[11;26H[K[11;5H[?25h[?25l [1m[96mcommand[m[38;5;224m:[m echo jajal[11;25H[K[11;5H[?25h[?25l[1m[96mcommand[m[38;5;224m:[m echo jajal[11;24H[K[11;5H[?25h[?25l[10;21H[1m[96m:command[m[38;5;224m:[m echo jajal[11;5H[K[12;5H[1m[96mparts[m[38;5;224m:[m[13;5H        [1m[96mhttpstat[m[38;5;224m:[m[14;13H[1m[96mplugin[m[38;5;224m:[m dump[15;13H[1m[96mbuild-packages[m[38;5;224m:[m[16;13H        [93m- [mwget[16;27H[K[17;13H[1m[96mstage-packages[m[38;5;224m:[m[18;13H        [93m- [mwget[18;27H[K[19;1H[94m~                                                                               [m[24;64H0,18[10;22H[?25h[?25l[38;5;224m:[m[10;22H[K[11;21H[1m[96mcommand[m[38;5;224m:[m echo jajal[12;5H[K[13;5H[1m[96mparts[m[38;5;224m:[m[13;13H[K[14;13H[1m[96mhttpstat[m[38;5;224m:[m[14;22H[K[15;13H[1m[96mplugin[m[38;5;224m:[m dump[15;25H[K[16;13H[1m[96mbuild-packages[m[38;5;224m:[m[17;13H        [93m- [mwget[17;27H[K[18;13H[1m[96mstage-packages[m[38;5;224m:[m
+[93m 19 [m                [93m- [mwget[19;27H[K[24;63H[K[24;63H11,17[9CAll[11;21H[?25h[?25l[1m[96mcommand[m[38;5;224m:[m echo jajal[11;39H[K[24;63H[K[24;63H11,16[9CAll[11;20H[?25h[?25l[1m[96mcommand[m[38;5;224m:[m echo jajal[11;38H[K[24;67H5[11;19H[?25h[?25l[1m[96mcommand[m[38;5;224m:[m echo jajal[11;37H[K[24;67H4[11;18H[?25h[?25l[1m[96mcommand[m[38;5;224m:[m echo jajal[11;36H[K[24;67H3[11;17H[?25h[?25l[1m[96mcommand[m[38;5;224m:[m echo jajal[11;35H[K[24;67H2[11;16H[?25h[?25l[1m[96mcommand[m[38;5;224m:[m echo jajal[11;34H[K[24;67H1[11;15H[?25h[?25l[1m[96mcommand[m[38;5;224m:[m echo jajal[11;33H[K[24;67H0[11;14H[?25h[?25l[1m[96mcommand[m[38;5;224m:[m echo jajal[11;32H[K[24;66H9 [11;13H[?25h[?25l[1m[96mcommand[m[38;5;224m:[m echo jajal[11;31H[K[24;63H[K[24;63H11,8[10CAll[11;12H[?25h[?25l[1m[96mcommand[m[38;5;224m:[m echo jajal[11;30H[K[24;66H7[11;11H[?25h[?25l[1m[96mcommand[m[38;5;224m:[m echo jajal[11;29H[K[24;66H6[11;10H[?25h[?25l[1m[96mcommand[m[38;5;224m:[m echo jajal[11;28H[K[24;66H5[11;9H[?25h[?25l[1m[96mcommand[m[38;5;224m:[m echo jajal[11;27H[K[24;66H4[11;8H[?25h[?25l[1m[96mcommand[m[38;5;224m:[m echo jajal[11;26H[K[24;66H3[11;7H[?25h[?25l[1m[96mcommand[m[38;5;224m:[m echo jajal[11;25H[K[24;66H2[11;6H[?25h[?25l[1m[96mcommand[m[38;5;224m:[m echo jajal[11;24H[K[24;66H1[11;5H[?25h[?25l[10;21H[1m[96m:command[m[38;5;224m:[m echo jajal[11;5H[K[12;5H[1m[96mparts[m[38;5;224m:[m[13;5H        [1m[96mhttpstat[m[38;5;224m:[m[14;13H[1m[96mplugin[m[38;5;224m:[m dump[15;13H[1m[96mbuild-packages[m[38;5;224m:[m[16;13H        [93m- [mwget[16;27H[K[17;13H[1m[96mstage-packages[m[38;5;224m:[m[18;13H        [93m- [mwget[18;27H[K[19;1H[94m~                                                                               [m[24;64H0,18[10;22H[?25h[?25l[38;5;224m:[m[10;22H[K[11;21H[1m[96mcommand[m[38;5;224m:[m echo jajal[12;5H[K[13;5H[1m[96mparts[m[38;5;224m:[m[13;13H[K[14;13H[1m[96mhttpstat[m[38;5;224m:[m[14;22H[K[15;13H[1m[96mplugin[m[38;5;224m:[m dump[15;25H[K[16;13H[1m[96mbuild-packages[m[38;5;224m:[m[17;13H        [93m- [mwget[17;27H[K[18;13H[1m[96mstage-packages[m[38;5;224m:[m
+[93m 19 [m                [93m- [mwget[19;27H[K[24;63H[K[24;63H11,17[9CAll[11;21H[?25h[?25l[24;64H2,1 [12;5H[?25h[?25l[24;64H3,7[13;11H[?25h[?25l[24;64H4,17[14;21H[?25h[?25l[24;64H5[15;21H[?25h[?25l[24;67H [15;5H[?25h[?25l[7C[1m[96mplugin[m[38;5;224m:[m dump[15;24H[K[24;63H[K[24;63H15,1[10CAll[15;5H[?25h[?25l      [1m[96mplugin[m[38;5;224m:[m dump[15;23H[K[15;5H[?25h[?25l     [1m[96mplugin[m[38;5;224m:[m dump[15;22H[K[15;5H[?25h[?25l    [1m[96mplugin[m[38;5;224m:[m dump[15;21H[K[15;5H[?25h[?25l   [1m[96mplugin[m[38;5;224m:[m dump[15;20H[K[15;5H[?25h[?25l  [1m[96mplugin[m[38;5;224m:[m dump[15;19H[K[15;5H[?25h[?25l [1m[96mplugin[m[38;5;224m:[m dump[15;18H[K[15;5H[?25h[?25l[1m[96mplugin[m[38;5;224m:[m dump[15;17H[K[15;5H[?25h[?25l[14;21H[1m[96m:plugin[m[38;5;224m:[m dump[15;5H        [1m[96mbuild-packages[m[38;5;224m:[m[16;13H        [93m- [mwget[16;27H[K[17;13H[1m[96mstage-packages[m[38;5;224m:[m[18;13H        [93m- [mwget[18;27H[K[19;1H[94m~                                                                               [m[24;63H[K[24;63H14,18[9CAll[14;22H[?25h[?25l[38;5;224m:[m[14;22H[K[15;13H        [1m[96mplugin[m[38;5;224m:[m dump[16;13H[1m[96mbuild-packages[m[38;5;224m:[m[17;13H        [93m- [mwget[17;27H[K[18;13H[1m[96mstage-packages[m[38;5;224m:[m
+[93m 19 [m                [93m- [mwget[19;27H[K[24;63H[K[24;63H15,17[9CAll[15;21H[?25h[?25l[24;64H6[16;21H[?25h[?25l[24;67H [16;5H[?25h[?25l[7C[1m[96mbuild-packages[m[38;5;224m:[m[16;27H[K[24;63H[K[24;63H16,1[10CAll[16;5H[?25h[?25l      [1m[96mbuild-packages[m[38;5;224m:[m[16;26H[K[16;5H[?25h[?25l     [1m[96mbuild-packages[m[38;5;224m:[m[16;25H[K[16;5H[?25h[?25l    [1m[96mbuild-packages[m[38;5;224m:[m[16;24H[K[16;5H[?25h[?25l   [1m[96mbuild-packages[m[38;5;224m:[m[16;23H[K[16;5H[?25h[?25l  [1m[96mbuild-packages[m[38;5;224m:[m[16;22H[K[16;5H[?25h[?25l [1m[96mbuild-packages[m[38;5;224m:[m[16;21H[K[16;5H[?25h[?25l[1m[96mbuild-packages[m[38;5;224m:[m[16;20H[K[16;5H[?25h[?25l[15;33Hbuild-packages:[16;5H                [93m- [mwget[17;13H[1m[96mstage-packages[m[38;5;224m:[m[18;13H        [93m- [mwget[18;27H[K[19;1H[94m~                                                                               [m[24;63H[K[24;63H15,29[9CAll[15;33H[?25h[?25l[15;33H[K[16;21H[1m[96mbuild-packages[m[38;5;224m:[m[17;13H        [93m- [mwget[17;27H[K[18;13H[1m[96mstage-packages[m[38;5;224m:[m
+[93m 19 [m                [93m- [mwget[19;27H[K[24;63H[K[24;63H16,17[9CAll[16;21H[?25h[?25l[24;64H7[17;21H[?25h[?25l[93m- [mwget[17;26H[K[24;63H[K[24;63H17,16[9CAll[17;20H[?25h[?25l[93m- [mwget[17;25H[K[24;67H5[17;19H[?25h[?25l[93m- [mwget[17;24H[K[24;67H4[17;18H[?25h[?25l[93m- [mwget[17;23H[K[24;67H3[17;17H[?25h[?25l[93m- [mwget[17;22H[K[24;67H2[17;16H[?25h[?25l[93m- [mwget[17;21H[K[24;67H1[17;15H[?25h[?25l[93m- [mwget[17;20H[K[24;67H0[17;14H[?25h[?25l[93m- [mwget[17;19H[K[24;66H9 [17;13H[?25h[?25l[93m- [mwget[17;18H[K[24;63H[K[24;63H17,8[10CAll[17;12H[?25h[?25l[93m- [mwget[17;17H[K[24;66H7[17;11H[?25h[?25l[93m- [mwget[17;16H[K[24;66H6[17;10H[?25h[?25l[93m- [mwget[17;15H[K[24;66H5[17;9H[?25h[?25l[93m- [mwget[17;14H[K[24;66H4[17;8H[?25h[?25l[93m- [mwget[17;13H[K[24;66H3[17;7H[?25h[?25l[93m- [mwget[17;12H[K[24;66H2[17;6H[?25h[?25l[93m- [mwget[17;11H[K[24;66H1[17;5H[?25h[?25l[16;21Hbuild-packages:- wget[17;5H        [1m[96mstage-packages[m[38;5;224m:[m[18;13H        [93m- [mwget[18;27H[K[19;1H[94m~                                                                               [m[24;63H[K[24;63H16,32[9CAll[16;36H[?25h[?25l[16;21H[1m[96mbuild-packages[m[38;5;224m:[m[16;36H[K[17;13H                [93m- [mwget[18;13H[1m[96mstage-packages[m[38;5;224m:[m
+[93m 19 [m                [93m- [mwget[19;27H[K[24;63H[K[24;63H17,25[9CAll[17;29H[?25h[?25l[24;64H8,24[18;28H[?25h[?25l[24;66H1 [18;5H[?25h[?25l[7C[1m[96mstage-packages[m[38;5;224m:[m[18;27H[K[24;63H[K[24;63H18,1[10CAll[18;5H[?25h[?25l      [1m[96mstage-packages[m[38;5;224m:[m[18;26H[K[18;5H[?25h[?25l     [1m[96mstage-packages[m[38;5;224m:[m[18;25H[K[18;5H[?25h[?25l    [1m[96mstage-packages[m[38;5;224m:[m[18;24H[K[18;5H[?25h[?25l   [1m[96mstage-packages[m[38;5;224m:[m[18;23H[K[18;5H[?25h[?25l  [1m[96mstage-packages[m[38;5;224m:[m[18;22H[K[18;5H[?25h[?25l [1m[96mstage-packages[m[38;5;224m:[m[18;21H[K[18;5H[?25h[?25l[1m[96mstage-packages[m[38;5;224m:[m[18;20H[K[18;5H[?25h[?25l[17;31H[1m[96mwgetstage-packages[m[38;5;224m:[m[18;5H                [93m- [mwget
+[94m~                                                                               [m[24;63H[K[24;63H17,31[9CAll[17;35H[?25h[?25lwget[17;35H[K[18;21H[1m[96mstage-packages[m[38;5;224m:[m
+[93m 19 [m                [93m- [mwget[19;27H[K[24;63H[K[24;63H18,17[9CAll[18;21H[?25h[?25l[24;64H9[19;21H[?25h[?25l        [93m- [mwget[24;63H[K[24;63H19,25[9CAll[19;29H[?25h[24;1H[K[19;28H[?25l[24;63H19,24[9CAll[19;28H[?25h[?25l[24;63H[K[24;1H:[?2004h[?25h[?25l[?25hw[?25l[?25hq[?25l[?25h[?25l[?2004l"snap/snapcraft.yaml" 19L, 351C written[23;2t[23;1t[22;2t[22;1t[23;2t[23;1t
+[?2004l[?1l>[?25h[?1049l[23;0;0t[1m[7m%[27m[1m[0m                                                                                ]2;dev@ls: ~/Documents/httpstat]1;..ents/httpstat[0m[27m[24m[J(base) [01;32m➜  [36mhttpstat[00m [K[?1h=[?2004hs[90mnapcraft help plugins[39m[21Ds[39mn[39ma[39mp[39mc[39mr[39ma[39mf[39mt[39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [13D[?1l>[?2004l
+]2;snapcraft]1;snapcraft[0;31mFailed to reuse files from previous run: The 'pull' step of 'httpstat' is out of date:
+The 'stage-packages' part property appears to have changed.
+To continue, clean that part's 'pull' step by running `snapcraft clean httpstat -s pull`.[0m
+[1m[7m%[27m[1m[0m                                                                                ]2;dev@ls: ~/Documents/httpstat]1;..ents/httpstat[0m[27m[24m[J(base) [01;31m➜  [36mhttpstat[00m [K[?1h=[?2004hs[90mnapcraft[39m[8Ds[39mn[39ma[39mp[39mc[39m [39m [39m [39m 
+[J[0msnapcraft     [Jsnapcraftctl  [Jsnapctl     [J[A[0m[27m[24m[19Csnapc[K[90mraft[39m[39mr
+[J[A[25C[39ma[39mf[39mt [90mhelp plugins[39m[12D[39mc[90ml[90me[90ma[90mn[90m [90mh[90mt[90mt[90mp[90ms[90mt[90mat -s pull[39m[21D[39ml[39me[39ma[39mn[39m [39mh[39mt[39mt[39mp[39ms[39mt[39ma[39mt[39m [39m-[39ms[39m [39mp[39mu[39ml[39ml[?1l>[?2004l
+[J]2;snapcraft clean httpstat -s pull]1;snapcraft[0;32mCleaning pull step (and all subsequent steps) for httpstat[0m
+[0;32mCleaning up priming area[0m
+[0;32mCleaning up staging area[0m
+[0;32mCleaning up parts directory[0m
+[1m[7m%[27m[1m[0m                                                                                ]2;dev@ls: ~/Documents/httpstat]1;..ents/httpstat[0m[27m[24m[J(base) [01;32m➜  [36mhttpstat[00m [K[?1h=[?2004hsnapcraft clean httpstat -s pull[22D                      [23D[9Dvim snap/snapcraft.yaml[?1l>[?2004l
+]2;vim snap/snapcraft.yaml]1;vim[?2004h[?1049h[22;0;0t[?1h=[?2004h[1;24r[?12h[?12l[22;2t[22;1t[27m[23m[29m[m[H[2J[?25l[24;1H[97m[41mE325: ATTENTION[m
+Found a swap file by the name "snap/.snapcraft.yaml.swp"
+[10Cowned by: dev   dated: Fri Jul  5 15:58:59 2019
+[9Cfile name: /home/dev/Documents/httpstat/snap/snapcraft.yaml
+[10Cmodified: YES
+[9Cuser name: dev   host name: ls
+[8Cprocess ID: 19594 (still running)
+[9C[not usable on this computer]
+While opening file "snap/snapcraft.yaml"
+[13Cdated: Fri Jul  5 16:59:42 2019
+      NEWER than swap file!
+
+(1) Another program may be editing the same file.  If this is the case,
+    be careful not to end up with two different instances of the same
+    file when making changes.  Quit, or continue with caution.
+(2) An edit session for this file crashed.
+    If this is the case, use ":recover" or "vim -r snap/snapcraft.yaml"
+    to recover the changes (see ":help recovery").
+    If you did this already, delete the swap file "snap/.snapcraft.yaml.swp"
+    to avoid this message.
+
+[32mSwap file "snap/.snapcraft.yaml.swp" already exists![m
+[32m[O]pen Read-Only, (E)dit anyway, (R)ecover, (Q)uit, (A)bort: [?25h[m[24;1H[K[?25l[24;1H"snap/snapcraft.yaml" 19L, 351C[2;1H▽[6n[2;1H  [1;1H[>c]10;?]11;?[1;1H[38;5;130m  1 [m[36mname[m[35m:[m jajalapp
+[38;5;130m  2 [m[36mversion[m[35m:[m [31m'1.1.3'[m
+[38;5;130m  3 [m[36msummary[m[35m:[m jajal[3;19H[K[4;1H[38;5;130m  4 [m[36mdescription[m[35m:[m |[4;19H[K[5;1H[38;5;130m  5 [m[36mgrade[m[35m:[m stable[5;18H[K[6;1H[38;5;130m  6 [m[36mconfinement[m[35m:[m strict
+[38;5;130m  7 [m[36mbase[m[35m:[m core18[7;17H[K[8;1H[38;5;130m  8 [m[8;9H[K[9;1H[38;5;130m  9 [m[36mapps[m[35m:[m[9;10H[K[10;1H[38;5;130m 10 [m        [36mhttpstat[m[35m:[m[10;22H[K[11;1H[38;5;130m 11 [m[9C       [36mcommand[m[35m:[m echo jajal[11;41H[K[12;1H[38;5;130m 12 [m[12;7H[K[13;1H[38;5;130m 13 [m[36mparts[m[35m:[m
+[38;5;130m 14 [m        [36mhttpstat[m[35m:[m[14;22H[K[15;1H[38;5;130m 15 [m                [36mplugin[m[35m:[m dump[15;33H[K[16;1H[38;5;130m 16 [m                [36mbuild-packages[m[35m:[m[16;36H[K[17;1H[38;5;130m 17 [m                        [38;5;130m- [mwget[17;35H[K[18;1H[38;5;130m 18 [m                [36mstage-packages[m[35m:[m[18;36H[K[19;1H[38;5;130m 19 [m                        [38;5;130m- [mwget[19;35H[K[20;1H[94m~                                                                               [21;1H~                                                                               [22;1H~                                                                               [23;1H~                                                                               [m[24;63H1,1[11CAll[1;5H[?25hP+q436f\P+q6b75\P+q6b64\P+q6b72\P+q6b6c\P+q2332\P+q2334\P+q2569\P+q2a37\P+q6b31\[27m[23m[29m[m[H[2J[?25l[1;1H[93m  1 [m[1m[96mname[m[38;5;224m:[m jajalapp
+[93m  2 [m[1m[96mversion[m[38;5;224m:[m [95m'1.1.3'[m
+[93m  3 [m[1m[96msummary[m[38;5;224m:[m jajal
+[93m  4 [m[1m[96mdescription[m[38;5;224m:[m |
+[93m  5 [m[1m[96mgrade[m[38;5;224m:[m stable
+[93m  6 [m[1m[96mconfinement[m[38;5;224m:[m strict
+[93m  7 [m[1m[96mbase[m[38;5;224m:[m core18
+[93m  8 
+  9 [m[1m[96mapps[m[38;5;224m:[m
+[93m 10 [m[8C[1m[96mhttpstat[m[38;5;224m:[m
+[93m 11 [m[16C[1m[96mcommand[m[38;5;224m:[m echo jajal
+[93m 12 
+ 13 [m[1m[96mparts[m[38;5;224m:[m
+[93m 14 [m[8C[1m[96mhttpstat[m[38;5;224m:[m
+[93m 15 [m[16C[1m[96mplugin[m[38;5;224m:[m dump
+[93m 16 [m[16C[1m[96mbuild-packages[m[38;5;224m:[m
+[93m 17 [m[24C[93m- [mwget
+[93m 18 [m[16C[1m[96mstage-packages[m[38;5;224m:[m
+[93m 19 [m[24C[93m- [mwget
+[94m~                                                                               [21;1H~                                                                               [22;1H~                                                                               [23;1H~                                                                               [m[24;63H1,1[11CAll"snap/snapcraft.yaml" 19L, 351C[1;5H[?25h[?25l[24;1H[38;5;224mThe ycmd server SHUT DOWN (re... a Python 2 interpreter path.[m[24;63H[K[24;63H1,1[11CAll[1;5H[?25h[?25l[24;63H2[2;5H[?25h[?25l[24;63H3[3;5H[?25h[?25l[24;63H4[4;5H[?25h[?25l[24;63H5[5;5H[?25h[?25l[24;63H6[6;5H[?25h[?25l[24;63H7[7;5H[?25h[?25l[24;63H8,0-1[8;5H[?25h[?25l[24;63H9,1  [9;5H[?25h[?25l[24;63H10,1[10;5H[?25h[?25l[24;64H1[11;5H[?25h[?25l[24;64H2,0-1[12;5H[?25h[?25l[24;64H3,1  [13;5H[?25h[?25l[24;64H4[14;5H[?25h[?25l[24;64H5[15;5H[?25h[?25l[24;64H6[16;5H[?25h[?25l[24;66H2[16;6H[?25h[?25l[24;66H3[16;7H[?25h[?25l[24;66H4[16;8H[?25h[?25l[24;66H5[16;9H[?25h[?25l[24;66H6[16;10H[?25h[?25l[24;66H7[16;11H[?25h[?25l[24;66H8[16;12H[?25h[?25l[24;66H9[16;13H[?25h[?25l[24;66H10[16;14H[?25h[?25l[24;67H1[16;15H[?25h[?25l[24;67H2[16;16H[?25h[?25l[24;67H3[16;17H[?25h[?25l[24;64H7[17;17H[?25h[?25l[24;64H8[18;17H[?25h[?25l[24;67H4[18;18H[?25h[?25l[24;67H5[18;19H[?25h[?25l[24;67H6[18;20H[?25h[?25l[24;67H7[18;21H[?25h[?25l[24;1H?\<stage\>[24;11H[K[24;1H[38;5;224msearch hit TOP, continuing at BOTTOM[m[26C18,17[9CAll[24;63H[K[24;63H18,17[9CAll[18;21H[?25h[?25l[24;1H[1m-- INSERT --[m[24;13H[K[24;63H18,18[9CAll[18;22H[?25h[?25l[24;67H7[18;21H[?25h[?25l         [96m #stage-packages:[m[24;63H[K[24;63H18,28[9CAll[18;32H[?25h[?25l [1m[96mstage-packages[m[38;5;224m:[m[18;46H[K[24;67H7[18;31H[?25h[?25l[1m[96mstage-packages[m[38;5;224m:[m[18;45H[K[24;67H6[18;30H[?25h[?25l[1m[96mstage-packages[m[38;5;224m:[m[18;44H[K[24;67H5[18;29H[?25h[?25l[1m[96mstage-packages[m[38;5;224m:[m[18;43H[K[24;63H[K[24;63H18,24[9CAll[18;28H[?25h[?25l[1m[96mstage-packages[m[38;5;224m:[m[18;42H[K[24;67H3[18;27H[?25h[?25l[1m[96mstage-packages[m[38;5;224m:[m[18;41H[K[24;67H2[18;26H[?25h[?25l[1m[96mstage-packages[m[38;5;224m:[m[18;40H[K[24;67H1[18;25H[?25h[?25l[1m[96mstage-packages[m[38;5;224m:[m[18;39H[K[24;67H0[18;24H[?25h[?25l[1m[96mstage-packages[m[38;5;224m:[m[18;38H[K[24;66H19[18;23H[?25h[?25l[1m[96mstage-packages[m[38;5;224m:[m[18;37H[K[24;67H8[18;22H[?25h[?25l[1m[96mstage-packages[m[38;5;224m:[m[18;36H[K[24;67H7[18;21H[?25h[?25l[1m[96m/stage-packages[m[38;5;224m:[m[24;67H8[18;22H[?25h[?25l/#stage-packages:[24;67H9[18;23H[?25h[?25l[24;67H8[18;22H[?25h[?25l[96m #stage-packages:[m[18;37H[K[24;63H[K[24;63H18,17[9CAll[18;21H[?25h[?25l[24;64H9[19;21H[?25h[?25l/[7C - wget[24;63H[K[24;63H19,18[9CAll[19;22H[?25h[?25l#[7C - wget[24;67H9[19;23H[?25h[?25l[24;67H8[19;22H[?25h[?25l[96m #        - wget[m[19;36H[K[24;63H[K[24;63H19,17[9CAll[19;21H[?25h[24;1H[K[19;20H[?25l[24;63H19,16[9CAll[19;20H[?25h[?25l[24;63H[K[24;1H:[?2004h[?25h[?25l[?25hw[?25l[?25hq[?25l[?25h[?25l[?2004l"snap/snapcraft.yaml" 19L, 353C written[23;2t[23;1t[22;2t[22;1t[23;2t[23;1t
+[?2004l[?1l>[?25h[?1049l[23;0;0t[1m[7m%[27m[1m[0m                                                                                ]2;dev@ls: ~/Documents/httpstat]1;..ents/httpstat[0m[27m[24m[J(base) [01;32m➜  [36mhttpstat[00m [K[?1h=[?2004hvim snap/snapcraft.yaml[23D[9P[9C clean httpstat -s pull[22D                      [23D[?1l>[?2004l
+]2;snapcraft]1;snapcraft[0;32mPulling httpstat [0m
+[0;32mBuilding httpstat [0m
+[0;32mStaging httpstat [0m
+[0;32mPriming httpstat [0m
+[0;32mSnapping 'jajalapp'[0;32m |                                            
+[0;32mSnapped jajalapp_1.1.3_amd64.snap[0m
+[1m[7m%[27m[1m[0m                                                                                ]2;dev@ls: ~/Documents/httpstat]1;..ents/httpstat[0m[27m[24m[J(base) [01;32m➜  [36mhttpstat[00m [K[?1h=[?2004hs[90mnapcraft[39m[8Ds[39ma[90mm[90me[90mh[90ma[90md[90ma[90mk[90mu list[39m[13Ds[90mn[90ma[90mp[90mc[90mr[90ma[90mf[90mt[39m[39m [39m [39m [39m [39m [39m [14D [39m [39m [39m [39m [39m [39m [39m [39m [9Ds[90mnapcraft[39m[8Ds[39mn[39ma[39mp[39m [90mi[90mn[90ms[90mt[90mall jajalapp_1.1.3_amd64.snap --dangerous[39m[45D[39ml[90mi[2C[90m [90m-[90m-[90ma[90ml[90ml[90m [90mh[90mt[90mt[90mp[90ms[90mt[90ma[90mt[39m[39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [44D[39mi[39ms[39mt[39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [15D[?1l>[?2004l
+]2;snap list]1;snapName           Version    Rev   Tracking  Publisher[32m[0m   Notes
+core18         20190627   1049  stable    canonical[32m✓[0m  base
+jajalapp       1.1.3      x1    -         -[32m[0m           -
+snapd          2.39.2     3646  stable    canonical[32m✓[0m  snapd
+wine-platform  3.0.4-4.6  128   stable    mmtrt[32m[0m       -
+[1m[7m%[27m[1m[0m                                                                                ]2;dev@ls: ~/Documents/httpstat]1;..ents/httpstat[0m[27m[24m[J(base) [01;32m➜  [36mhttpstat[00m [K[?1h=[?2004hs[90mnap list[39m[8Ds[39mn[39ma[39mp[39m [90m [90mp[90ma[39ms[90mn[39m [39m [39m [39m [39m [39m [39m [39m [39m [9Dc[90md ../httpstat[39m[13D [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [14Dl[90ms[39ml[39ms [90m/snap/jajalapp/x1/command-httpstat.wrapper[39m[42D[39m/[39ms[39mn[39ma[39mp[39m[1m/[0m[0m/[39mj[39ma[39mj[39ma[39ml[39ma[39mp[39mp[39m[1m/[0m[0m/[39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [27D
+[J[01;36mcurrent[0m@  [J[01;34mx1[0m/     [J[A[0m[27m[24m[19Cls /snap/jajalapp/[K[90mx1/command-httpstat.wrapper[39m[27D[39mc[39mu[39mr[39mr[39me[39mn[39mt[39m[1m/[0m[39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [19D
+[J[7mcurrent@[0m  [J[01;34mx1[0m/     [J[A[0m[27m[24m[19Cls /snap/jajalapp/current[1m/[0m[K
+[7mcurrent@[0m  [7mcurrent@[0m  [A[0m[27m[24m[19Cls /snap/jajalapp/current[1m/[0m[K[8Dx1[1m/[0m    [0m 
+[10C[7mx1/     [0m[01;36mcurrent[0m@  [A[0m[27m[24m[19Cls /snap/jajalapp/x1[1m/[0m[K
+[J[A[40C[90mcommand-httpstat.wrapper[39m[24D[0m/[39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [39m [24D
+[J[J[01;32mcommand-httpstat.wrapper[0m*  [J[01;34mmeta[0m/                    [J[A[0m[27m[24m[19Cls /snap/jajalapp/x1/[K[90mcommand-httpstat.wrapper[39m[24D[39mc[39mo[39mm[39mm[39ma[39mn[39md[39m-[39mh[39mt[39mt[39mp[39ms[39mt[39ma[39mt[39m.[39mw[39mr[39ma[39mp[39mp[39me[39mr
+[J[7mcommand-httpstat.wrapper*[0m  [J[01;34mmeta[0m/                    [J[A[0m[27m[24m[19Cls /snap/jajalapp/x1/command-httpstat.wrapper[K
+[7mcommand-httpstat.wrapper*[0m  [7mcommand-httpstat.wrapper*[0m  [A[0m[27m[24m[19Cls /snap/jajalapp/x1/command-httpstat.wrapper[K[24Dmeta[1m/[0m                   [19D
+[27C[7mmeta/                    [0m[01;32mcommand-httpstat.wrapper[0m*  [A[0m[27m[24m[19Cls /snap/jajalapp/x1/meta[1m/[0m[Kcomm[0mand-httpstat.wrapper
+[7mcommand-httpstat.wrapper*[0m  [27C[01;34mmeta[0m/                    [A[0m[27m[24m[19Cls /snap/jajalapp/x1/command-httpstat.wrapper[K
+[J[A[64C[1m [0m[0m [46D[P[44C [45D[P[43C [44Dc /snap/jajalapp/x1/command-httpstat.wrapper[43Dca /snap/jajalapp/x1/command-httpstat.wrapper[43Dt /snap/jajalapp/x1/command-httpstat.wrapper[43D[?1l>[?2004l
+[J]2;cat /snap/jajalapp/x1/command-httpstat.wrapper]1;cat#!/bin/sh
+export PATH="$SNAP/usr/sbin:$SNAP/usr/bin:$SNAP/sbin:$SNAP/bin:$PATH"
+export LD_LIBRARY_PATH=$SNAP_LIBRARY_PATH:$LD_LIBRARY_PATH
+exec "echo" "jajal" "$@"
+[1m[7m%[27m[1m[0m                                                                                ]2;dev@ls: ~/Documents/httpstat]1;..ents/httpstat[0m[27m[24m[J(base) [01;32m➜  [36mhttpstat[00m [K[?1h=[?2004hh[90mttpstat[39m [39m [39m [39m [39m [39m [39m [39m [8Dh[90mttpstat[39mh[39mt[39mt[39mp[39m [39m [39m [39m 
+[J[0mjajalapp.httpstat  [J_lighttpd        [J[A[0m[27m[24m[19Chttp[K[90mstat[39m[90mp[90mt[39mh[90mt[39m [39m [39m [39m [39m [39m [39m [39m [8Dj[90mal[39mj[39ma[39mj[90mal[39m[39ma[39mlapp.httpstat[1m [0m[0m [?1l>[?2004l
+[J]2;jajalapp.httpstat]1;jajalapp.httpstatERROR: ld.so: object 'libgtk3-nocsd.so.0' from LD_PRELOAD cannot be preloaded (failed to map segment from shared object): ignored.
+jajal
+[1m[7m%[27m[1m[0m                                                                                ]2;dev@ls: ~/Documents/httpstat]1;..ents/httpstat[0m[27m[24m[J(base) [01;32m➜  [36mhttpstat[00m [K[?1h=[?2004heexec "echo" "jajal" "$@"[24D[7me[7mx[7me[7mc[7m [7m"[7me[7mc[7mh[7mo[7m"[7m [7m"[7mj[7ma[7mj[7ma[7ml[7m"[7m [7m"[7m$[7m@[7m"[27m[24D[27me[27mx[27me[27mc[27m [27m"[27me[27mc[27mh[27mo[27m"[27m [27m"[27mj[27ma[27mj[27ma[27ml[27m"[27m [27m"[27m$[27m@[27m"[?1l>[?2004l
+]2;exec "echo" "jajal" "$@"]1;execjajal
+
+Script done on 2019-07-05 17:03:04+07:00 [COMMAND_EXIT_CODE="0"]

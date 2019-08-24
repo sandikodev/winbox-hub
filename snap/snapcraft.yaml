@@ -1,0 +1,16 @@
+name: winbox
+version: 3.18
+summary: Instan Package of Winbox Cross-Platform
+description: get easy to distribute winbox app through multi platform habits system
+confinement: strict
+
+base: core18
+grade: stable
+parts:
+ winbox:
+  plugin: dump
+  source: winbox.tar.gz
+
+apps:
+ winbox:
+  command: /bin/wine winbox.exe

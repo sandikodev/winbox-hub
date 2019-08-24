@@ -1,0 +1,12 @@
+[Desktop Entry]
+Version=3.18
+Name=Winbox
+Comment=Winbox
+GenericName=Mikrotik
+Keywords=Development;Internet
+Exec=winbox.winbox %U
+X-MultipleArgs=false
+Type=Application
+Icon=/opt/winbox/favicon.ico
+Kategories=Development;Internet
+StartupNotify=true
